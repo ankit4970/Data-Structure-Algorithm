@@ -4,9 +4,10 @@
 #include "common.h"
 #include <cstring>
 #include <chrono>
+#include <vector>
 
-#define max(a,b) (a > b ? a : b)
-#define min(a,b) (a < b ? a : b)
+
+
 #if 0
 bool isSubsequence(char* s, char* t) {
 
@@ -100,6 +101,7 @@ void maxOccuringcharacter(char *str)
     printf("answer is %c\n",result);
 }
 
+
 void removeSpaces(char *str)
 {
     int i = 0, count  = 0;
@@ -116,7 +118,11 @@ void removeSpaces(char *str)
     *(str+count) = '\0';
 }
 
-// Returns the length of the longest palindromic subsequence in seq
+/*
+ * ************************************************************************************************
+ * Searching for Patterns (Naive solution)
+ *      Returns the length of the longest palindromic subsequence in seq
+ *************************************************************************************************/
 int lps(char *str)
 {
     int n = strlen(str);
@@ -188,7 +194,7 @@ bool searchPattern1(char* target, char* pattern)
     {
         return false;
     }
-    //for(i = 0 ; i <= m - n ; i++ )
+
     while(i<=m)
     {
         for(j = 0 ; j < n ; j++)
@@ -214,17 +220,43 @@ bool searchPattern1(char* target, char* pattern)
     }
 }
 
+
+int compress(vector<char>& chars)
+{
+    int curIndex = 0, writeIndex = 0;
+    int readIndex = 0;
+    for (int i=0 ; i < chars.size() ; ++i )
+    {
+        if (i+1 == chars.size() || chars[i+1] != chars[i] )
+        {
+            chars[writeIndex++] = chars[readIndex];
+            if (i > readIndex)
+            {
+                string s = to_string(i - readIndex + 1);
+                for (char c : s)
+                {
+                    chars[writeIndex++] = c;
+                }
+            }
+            readIndex = i+1;
+        }
+    }
+    return writeIndex;
+}
+
+/*
+**************************************************************************************************
+ * stringMain
+ ************************************************************************************************/
 void stringMain()
 {
-    std::cout << "Hello from stringMain" << std::endl;
-
+    cout << "Hello from stringMain" << endl;
     char str[] = "BBBAABACBBAA";
     char pattern[] = "ABACB";
-    //std::cout << "lps is " << lps(str) << std::endl;
+
+    cout << "lps is " << lps(str) << endl;
 
     searchPattern(str,pattern);
-
-
     searchPattern1(str,pattern);
 
     return;

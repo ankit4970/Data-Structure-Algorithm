@@ -8,9 +8,13 @@ struct node
     node* right;
 };
 
-#include <iostream>
+#include "common.h"
 #include <queue>
 #include <limits.h>
+#include <string>
+
+
+
 
 void preOrder(node *root)
 {
@@ -89,4 +93,24 @@ int isBSTUtil(struct node* node, int min, int max)
 int isBST(struct node* node)
 {
     return(isBSTUtil(node, INT_MIN, INT_MAX));
+}
+
+void seriaLize(TreeNode* root, string& s)
+{
+
+}
+// Encodes a tree to a single string.
+string serialize(TreeNode* root)
+{
+
+}
+
+inline TreeNode* deseriaLize(const string& buffer, int& pos, int minValue, int maxValue)
+{
+
+}
+// Decodes your encoded data to tree.
+TreeNode* deserialize(string data)
+{
+
 }
