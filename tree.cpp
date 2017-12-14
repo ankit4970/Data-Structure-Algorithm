@@ -1,58 +1,54 @@
-//
-// Created by ankit on 9/19/2017.
-//
-struct node
-{
-    int data;
-    node* left;
-    node* right;
-};
+/* **************************************************************************************
+ * tree.cpp
+ *
+ *  Created by ankit on 9/19/2017.
+ *      Author: ankit
+ ***************************************************************************************/
 
 #include "common.h"
 #include <queue>
-#include <limits.h>
-#include <string>
 
-
-
-
-void preOrder(node *root)
+void preOrder(TreeNode *root)
 {
     if(root)
     {
-        std::cout << root->data << std::endl;
+        cout << root->val << endl;
         preOrder(root->left);
         preOrder(root->right);
     }
 }
 
-void inOrder(node *root)
+void inOrder(TreeNode *root)
 {
     if(root)
     {
         inOrder(root->left);
-        std::cout << root->data << std::endl;
+        cout << root->val << endl;
         inOrder(root->right);
     }
 }
 
-void postOrder(node *root)
+void postOrder(TreeNode *root)
 {
     if(root)
     {
         postOrder(root->left);
         postOrder(root->right);
-        std::cout << root->data << std::endl;
+        cout << root->val << endl;
     }
 }
-void LevelOrder(node * root)
+
+void LevelOrder(TreeNode * root)
 {
-    int i=0;
-    node* temp = root;
-    std::queue<node *> tempQueue;
-    while(temp)
+    TreeNode* temp = nullptr;
+    queue<TreeNode *> tempQueue;
+    tempQueue.push(root);
+
+    while(!tempQueue.empty())
     {
-        std::cout << temp->data << ' ';
+        temp = tempQueue.front();
+        tempQueue.pop();
+        cout << temp->val << ' ';
 
         if(temp->left)
         {
@@ -62,43 +58,77 @@ void LevelOrder(node * root)
         {
             tempQueue.push(temp->right);
         }
-
-        temp = tempQueue.front();
-        tempQueue.pop();
     }
 }
 
 
-/* Returns true if the given tree is a BST and its
-   values are >= min and <= max. */
-int isBSTUtil(struct node* node, int min, int max)
+/* **************************************************************************************
+ * Returns true if the given tree is a BST and its values are >= min and <= max.
+ ***************************************************************************************/
+int isBSTUtil(TreeNode* node, int min, int max)
 {
     /* an empty tree is BST */
     if (node == NULL)
+    {
         return 1;
+    }
 
     /* false if this node violates the min/max constraint */
-    if (node->data < min || node->data > max)
+    if (node->val < min || node->val > max)
+    {
         return 0;
+    }
 
-    /* otherwise check the subtrees recursively,
-     tightening the min or max constraint */
+    /* otherwise check the subtrees recursively, tightening the min or max constraint */
     return
-        isBSTUtil(node->left, min, node->data-1) &&  // Allow only distinct values
-        isBSTUtil(node->right, node->data+1, max);  // Allow only distinct values
+        isBSTUtil(node->left, min, node->val-1) &&     // Allow only distinct values
+        isBSTUtil(node->right, node->val+1, max);      // Allow only distinct values
 }
 
-/* Returns true if the given tree is a binary search tree
- (efficient version). */
-int isBST(struct node* node)
+/* Returns true if the given tree is a binary search tree (efficient version). */
+int isBST(TreeNode* node)
 {
     return(isBSTUtil(node, INT_MIN, INT_MAX));
 }
 
+int helper(string& data) {
+    int pos = data.find(',');
+    int val = stoi(data.substr(0,pos));
+    data = data.substr(pos+1);
+    return val;
+}
+// Encodes a tree to a single string.
+string serialize(TreeNode* root) {
+    if (root == nullptr) return "#";
+    return to_string(root->val)+","+serialize(root->left)+","+serialize(root->right);
+}
+TreeNode* mydeserialize(string& data)
+{
+    if (data[0]=='#')
+    {
+        if(data.size() > 1)
+            data = data.substr(2);
+        return nullptr;
+    }
+    else
+    {
+        TreeNode* node = new TreeNode(helper(data));
+        node->left = mydeserialize(data);
+        node->right = mydeserialize(data);
+        return node;
+    }
+}
+// Decodes your encoded data to tree.
+TreeNode* deserialize(string data) {
+    return mydeserialize(data);
+}
+
+/*
 void seriaLize(TreeNode* root, string& s)
 {
 
 }
+
 // Encodes a tree to a single string.
 string serialize(TreeNode* root)
 {
@@ -109,8 +139,10 @@ inline TreeNode* deseriaLize(const string& buffer, int& pos, int minValue, int m
 {
 
 }
+
 // Decodes your encoded data to tree.
 TreeNode* deserialize(string data)
 {
 
 }
+ */

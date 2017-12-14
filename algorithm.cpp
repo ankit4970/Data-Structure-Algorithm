@@ -5,8 +5,8 @@
  *      Author: ankit
  */
 
-#include<iostream>
-#include<climits>
+#include "common.h"
+#include <climits>
 #include <cstring>
 #include <vector>
 #include <map>
@@ -23,14 +23,6 @@ using namespace std;
 /* Utility Macros to get max and min of 2 numbers */
 #define max(a,b) (a > b ? a : b)
 #define min(a,b) (a < b ? a : b)
-
-// Linklist node structure
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-
 
 
 /******************************************************************************
@@ -224,43 +216,7 @@ void floodFill(int screen[][N], int x, int y, int newC)
 
 
 
-/*
-Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
-
-Example:
-Given nums = [2, 7, 11, 15], target = 9,
-
-Because nums[0] + nums[1] = 2 + 7 = 9,
-return [0, 1].
-*/
-
-vector<int> twoSum(vector<int>& nums, int target)
-{
-    vector<int> temp;
-    std::map<int, int> map;
-    std::map<int,int>::iterator it;
-    map.insert(std::pair<int,int>(nums[0], 0));
-
-    for (int i = 1; i < nums.size(); i++)
-    {
-        int comp = target - nums[i];
-        it = map.find(comp);
-
-        if (it != map.end() && it->second != i)
-        {
-            temp.push_back(it->second);
-            temp.push_back(i);
-            break;
-        }
-        else
-        {
-            map.insert(std::pair<int,int>(nums[i], i));
-        }
-    }
-    return temp;
-}
 
 // Maximum Distance in Array
 // Given m arrays, and each array is sorted in ascending order.
@@ -270,7 +226,7 @@ vector<int> twoSum(vector<int>& nums, int target)
 // absolute difference |a-b|. Your task is to find the maximum distance.
 int maxDistanceArray()
 {
-    std::vector<std::vector<int>> list = {{1,2,3},{4,5},{1,2,3}};
+    vector<vector<int>> list = {{1,2,3},{4,5},{1,2,3}};
 
     int res = 0;
     int min_val = list[0][0];
@@ -282,7 +238,7 @@ int maxDistanceArray()
         min_val = min(min_val, list[i][0]);
         max_val = max(max_val, list[i][list[i].size() - 1]);
     }
-    std::cout << res << std::endl ;
+    cout << res << endl ;
 }
 
 int longestIncreasingSubArray(vector<int>& nums)
@@ -303,7 +259,7 @@ int longestIncreasingSubArray(vector<int>& nums)
     int max = INT_MIN;
     for(int i = 0 ; i < table.size() ; i++)
     {
-        std:cout << table[i] << std::endl;
+        cout << table[i] << endl;
         if(max < table[i])
         {
             max = table[i];
@@ -335,8 +291,6 @@ int coinChange(vector<int>& coins, int amount) {
     return table[amount];
 }
 
-
-
 void printSolutionMaze(int sol[N][N])
 {
     for (int i = 0; i < N; i++)
@@ -365,11 +319,11 @@ bool solveMazeUtil(int maze[N][N], int x, int y, int sol[N][N])
         return true;
     }
 
-    if(isSafe(maze, x, y) == true)
+    if(isSafe(maze, x, y))
     {
         sol[x][y] = 1;
 
-        if ((solveMazeUtil(maze, x+1, y, sol) == true) || (solveMazeUtil(maze, x, y+1, sol) == true))
+        if ((solveMazeUtil(maze, x+1, y, sol)) || (solveMazeUtil(maze, x, y+1, sol)))
         {
             return true;
         }
@@ -527,9 +481,6 @@ void setZeroes(vector<vector<int>>& matrix,set<int>& row,set<int>& colomn)
             }
         }
     }
-
-
-
 }
 
 // Driver program to test above function

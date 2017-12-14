@@ -37,5 +37,7 @@ void stringMain();
 int sortingMain();
 void graphMain();
 void arrayMain();
+void bitsMain();
+void memoryMain();
 
 #endif //INTERVIEW_COMMON_H

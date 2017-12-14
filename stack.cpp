@@ -21,7 +21,8 @@ class myStack
         int top ;
 };
 
-bool myStack::isEmpty() {
+bool myStack::isEmpty()
+{
     return top < 0;
 }
 
@@ -48,7 +49,6 @@ bool myStack::push(int data) {
 
 class MinStack
 {
-    /** initialize your data structure here. */
     private:
         std::stack<int> s1;
         std::stack<int> s2;

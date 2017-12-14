@@ -1,24 +1,10 @@
 //
 // Created by ankit on 10/4/2017.
 //
-#include <iostream>
+#include "common.h"
 #include <vector>
 #include <cmath>
 
-using namespace std;
-class Solution {
-public:
-    vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        for(int i = 0 ; i < matrix.size() ; i++)
-        {
-            for(int j = 0 ; j < matrix[0].size() ; j++)
-            {
-                cout << matrix[i][j];
-            }
-            std::cout << std::endl;
-        }
-    }
-};
 
 void printMatrix(vector<vector<int>>& matrix)
 {
@@ -47,7 +33,7 @@ void matrixMultiplication( )
         { 1, 1, 1, 1}
     };
 
-    vector<vector<int>> res(matrix1.size(), std::vector<int>(matrix2[0].size(), 0));
+    vector<vector<int>> res(matrix1.size(), vector<int>(matrix2[0].size(), 0));
 
     for (int i = 0 ; i < matrix1.size() ; ++i)
     {
@@ -59,6 +45,7 @@ void matrixMultiplication( )
             }
         }
     }
+
     printMatrix(res);
 }
 
@@ -71,7 +58,7 @@ void matrixRotate90()
     };
     int M = matrix.size()-1;
 
-    for( int i = 0 ; i < ceil(matrix.size()/2.0) ; i++ )
+    for( int i = 0 ; i < matrix.size()/2.0 ; i++ )
     {
         for( int j = i ; j < M-i ; j++)
         {
@@ -85,17 +72,41 @@ void matrixRotate90()
     printMatrix(matrix);
 }
 
+// m1,m2 * n1,n2
+void multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
+{
+    int x, i, j;
+    int res[m1][n2];
+    for (i = 0; i < m1; i++)
+    {
+        for (j = 0; j < n2; j++)
+        {
+            res[i][j] = 0;
+            for (x = 0; x < m2; x++)
+            {
+                res[i][j] += mat1[i][x] * mat2[x][j];
+            }
+        }
+    }
+    for (i = 0; i < m1; i++)
+    {
+        for (j = 0; j < n2; j++)
+        {
+            printf("%d ", *(*(res + i) + j));
+        }
+        printf("\n");
+    }
+}
+
 void matrixMain()
 {
-    std::cout << "Hello from matrixMain" << std::endl;
+    cout << "Hello from matrixMain" << endl;
 
-    Solution sol;
-    vector<vector<int>> matrix = {
-                                    { 1, 2, 3 },
-                                    { 4, 5, 6 },
-                                    { 7, 8, 9 }
-                                };
-    //sol.spiralOrder(matrix);
+
+    vector<vector<int>> matrix = {{ 1, 2, 3 },
+                                  { 4, 5, 6 },
+                                  { 7, 8, 9 }};
+
     matrixMultiplication();
     matrixRotate90();
 }

@@ -23,12 +23,14 @@ int main()
 {
     cout << "Hello, the World!" << endl;
 
-    linkedListMain();
-    algoMain();
+    //linkedListMain();
+    //algoMain();
     matrixMain();
-    stringMain();
-    sortingMain();
-    graphMain();
-    arrayMain();
+    //stringMain();
+    //sortingMain();
+    //graphMain();
+    //arrayMain();
+    //bitsMain();
+    //memoryMain();
     return 0;
 }

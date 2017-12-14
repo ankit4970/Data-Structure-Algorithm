@@ -1,7 +1,3 @@
-//
-// Created by ankit on 10/12/2017.
-//
-
 /*
  * sorting.cpp
  *
@@ -9,27 +5,22 @@
  *      Author: ankit
  */
 
-
 #include "common.h"
 
-//int arr[10] = {12,34,37,1,67,32,13,17,33,123};
-#define ARRAY_LENGTH 11
-
-void swap(int array[],int swap1,int swap2)
+void swap(int array[], int swap1, int swap2)
 {
-    int temp = 0;
-    temp = array[swap2];
+    int temp = array[swap2];
     array[swap2] = array[swap1];
     array[swap1] = temp;
 }
 
-void printList(int arr[])
+void printList(int arr[], int size)
 {
-    for(int k = 0; k < ARRAY_LENGTH ; k++)
+    for(int k = 0; k < size ; k++)
     {
-        std::cout << arr[k] << ",";
+        cout << arr[k] << ",";
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 
@@ -65,6 +56,8 @@ void heapify(int arr[], int n, int i)
         // Recursively heapify the affected sub-tree
         heapify(arr, n, largest);
     }
+
+    printList(arr, n);
 }
 
 /**************************************************************************************************
@@ -83,13 +76,13 @@ void heapify(int arr[], int n, int i)
 bool heapSort(int array[], int len)
 {
     // Build heap (rearrange array)
-    for (int i = len / 2 - 1; i >= 0; i--)
+    for (int i = len/2 - 1; i >= 0; i--)
         heapify(array, len, i);
 
     // One by one extract an element from heap
     for (int i=len-1; i>=0; i--)
     {
-        // Move current root to end
+        // Move current root(first/top element) to end
         swap(array[0], array[i]);
 
         // call max heapify on the reduced heap
@@ -151,7 +144,7 @@ bool merge(int arr[],int start, int mid, int end)
     return true;
 }
 
-/**************************************************************************************************
+/* *************************************************************************************************
 * mergeSort - Sorts an array using Merge sort Technique
 ***************************************************************************************************
 *----------------------------------------------------
@@ -163,6 +156,10 @@ bool merge(int arr[],int start, int mid, int end)
 *----------------------------------------------------
 * Space Complexity 	| 	Worst Case  	: O(1)		|
 * ---------------------------------------------------
+* Merge sort is efficient in case of linked list compared to quick sort.
+* In linkedlist extra space is not required for merge routine.
+* Useful in external sorting(Very large data in disk and low RAM)
+* Stable algorithm (For same key value maintains order)
 **************************************************************************************************/
 bool mergeSort(int array[], int start, int end)
 {
@@ -179,7 +176,7 @@ bool mergeSort(int array[], int start, int end)
     return true;
 }
 
-/**************************************************************************************************
+/* *************************************************************************************************
 * quickSort - Sorts an array using Quick sort Technique
 ***************************************************************************************************
 *----------------------------------------------------
@@ -191,6 +188,8 @@ bool mergeSort(int array[], int start, int end)
 *----------------------------------------------------
 * Space Complexity 	| 	Worst Case  	: O(1)		|
 * ---------------------------------------------------
+*  Quick Sort is also a cache friendly algorithm as it has good locality of reference in arrays.
+ *  Not stable algorithm
 **************************************************************************************************/
 int partition(int array[], int low, int high)
 {
@@ -208,7 +207,7 @@ int partition(int array[], int low, int high)
 
     swap(array, lowIndex, high);	// Putting pivot to proper location
 
-    printList(array);
+    printList(array, high-low);
     return lowIndex;
 }
 
@@ -227,7 +226,7 @@ void quickSort(int array[], int low, int high)
 int partitionNew(int array[], int low, int high)
 {
     int pivot = array[high];
-    std::cout << "pivot is : " << pivot << std::endl;
+    cout << "pivot is : " << pivot << std::endl;
     int lowIndex = low;
 
     for (int j = low ; j < high ; j++)
@@ -240,9 +239,6 @@ int partitionNew(int array[], int low, int high)
     }
 
     swap(array, lowIndex, high);	// Putting pivot to proper location
-    //std::cout << "New pivot : " << lowIndex << std::endl;
-    //printList(array);
-    //getchar();
     return (lowIndex);
 }
 
@@ -270,7 +266,7 @@ int mThLargest(int arr[], int low, int high, int m)
     return arr[m];
 }
 
-/**************************************************************************************************
+/* *************************************************************************************************
 * bubbleSort - Sorts an array using Bubble sort Technique
 ***************************************************************************************************
 *------------------------------------------------
@@ -288,7 +284,7 @@ bool bubbleSort(int array[], int len)
 {
     int  i=0,j=0;
     int temp =0;
-    bool swapped =false;
+    bool swapped = false;
 
     for( i =0 ; i < len-1 ; i++)
     {
@@ -308,15 +304,17 @@ bool bubbleSort(int array[], int len)
             break;
         }
 
-        std::cout << "Bubble sort : Array after " <<i <<" pass" << "->";
-        printList(array);
+        cout << "Bubble sort : Array after " <<i <<" pass" << "->";
+        printList(array, len);
     }
 
     return true;
 }
 
-/**************************************************************************************************
+/* *************************************************************************************************
 * insertionSort - Sorts an array using Insertion sort Technique
+ * At any iteration , all members till that members are sorted.
+ * This sort is useful in live sorting (online)
 * *************************************************************************************************
 *------------------------------------------------
 * Time Complexity 	|	Best Case 		: O(n)	|
@@ -347,14 +345,14 @@ bool insertionSort(int array[], int len)
             }
         }
         array[index] = key;
-        std::cout << "Insertion sort : Array after " << i <<" pass" << " -> ";
-        printList(array);
+        cout << "Insertion sort : Array after " << i <<" pass" << " -> ";
+        printList(array, len);
     }
 
     return true;
 }
 
-/**************************************************************************************************
+/* *************************************************************************************************
 * selectionSort - Sorts an array using Selection sort Technique
 * *************************************************************************************************
 *------------------------------------------------
@@ -370,7 +368,7 @@ bool insertionSort(int array[], int len)
 void selectionSort(int arr[],int len)
 {
     int i=0,j=0,index=0,temp=0;
-    bool foundlower = false;
+    bool foundLower = false;
 
     for(i=0 ; i<len ; i++)
     {
@@ -379,51 +377,52 @@ void selectionSort(int arr[],int len)
         {
             if(arr[index] > arr[j])
             {
-                foundlower = true;
+                foundLower = true;
                 index = j;
             }
         }
-        if(foundlower)
+        if(foundLower)
         {
             temp = arr[index];
             arr[index] = arr[i];
             arr[i] = temp;
-            foundlower = false;
+            foundLower = false;
         }
         else
         {
             return;
         }
 
-        std::cout << "Selection sort : Array after " << i <<" pass" << " -> ";
-        printList(arr);
+        cout << "Selection sort : Array after " << i <<" pass" << " -> ";
+        printList(arr, len);
     }
 }
 
 
-/**************************************************************************************************
+/* *************************************************************************************************
 * Main - Main Entry
 * ************************************************************************************************/
-int sortingMain() {
-    std::cout << "Hello from sortingMain" << std::endl;
-    //int array[] = {2,4,5,8,7,9,1,3,6};
-    int arr[ARRAY_LENGTH] = {5, 4, 3, 2, 1, 11, 10, 9, 8, 7, 6};
+int sortingMain()
+{
+    cout << "Hello from sortingMain" << endl;
+    int arr[] = {5, 4, 3, 2, 1, 11, 10, 9, 8, 7, 6};
     int length = sizeof(arr) / sizeof(arr[0]);
-    std::cout << "Array before sorting is " << "-->";
-    printList(arr);
-    std::cout << std::endl;
+
+    cout << "Array before sorting is " << "-->";
+    printList(arr, length);
+    cout << endl;
 
     //selectionSort(arr,ARRAY_LENGTH);
-    insertionSort(arr,ARRAY_LENGTH);
+    //insertionSort(arr,length);
     //bubbleSort(arr,ARRAY_LENGTH);
     //quickSort(arr,0,10);
     //mergeSort(arr,0,10);
-    //heapSort(arr, length);
-    //std::cout << std::endl;
+    heapSort(arr, length);
     //quickSort(arr,0,10);
     //std::cout << mThLargest(arr, 0, 10, 11-10) << std::endl;
     //std::cout << "Array after sorting is " << "-->";
     //printList(arr);
+
     return 0;
 
 }
