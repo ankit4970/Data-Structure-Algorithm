@@ -6,40 +6,39 @@
 #include <cmath>
 
 
-void printMatrix(vector<vector<int>>& matrix)
+void Matrix::printMatrix(vector<vector<int>> &matrix)
 {
-    for(int i = 0 ; i < matrix.size() ; i++)
+    for (int i = 0; i < matrix.size(); i++)
     {
-        for(int j = 0 ; j < matrix[0].size() ; j++ )
+        for (int j = 0; j < matrix[0].size(); j++)
         {
-            std::cout << matrix[i][j] << "," ;
+            cout << matrix[i][j] << ",";
         }
-        std::cout << endl;
+        cout << endl;
     }
 }
 
-void matrixMultiplication( )
-{
+void Matrix::matrixMultiplication() {
     vector<vector<int>> matrix1 = {
-        { 1, 1, 1 },
-        { 1, 1, 1 },
-        { 1, 1, 1 },
-        { 1, 1, 1 }
+        {1, 1, 1},
+        {1, 1, 1},
+        {1, 1, 1},
+        {1, 1, 1}
     };
 
     vector<vector<int>> matrix2 = {
-        { 1, 1, 1, 1 },
-        { 1, 1, 1, 1 },
-        { 1, 1, 1, 1}
+        {1, 1, 1, 1},
+        {1, 1, 1, 1},
+        {1, 1, 1, 1}
     };
 
     vector<vector<int>> res(matrix1.size(), vector<int>(matrix2[0].size(), 0));
 
     for (int i = 0 ; i < matrix1.size() ; ++i)
     {
-        for (int j = 0 ; j < matrix2[0].size() ; ++j )
+        for (int j = 0 ; j < matrix2[0].size() ; ++j)
         {
-            for (int k = 0 ; k < matrix2.size() ; ++k )
+            for (int k = 0 ; k < matrix2.size() ; ++k)
             {
                 res[i][j] += (matrix1[i][k] * matrix2[k][j]);
             }
@@ -49,18 +48,19 @@ void matrixMultiplication( )
     printMatrix(res);
 }
 
-void matrixRotate90()
+void Matrix::matrixRotate90()
 {
     vector<vector<int>> matrix = {
-        { 1, 2, 3 },
-        { 4, 5, 6 },
-        { 7, 8, 9 }
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
     };
-    int M = matrix.size()-1;
 
-    for( int i = 0 ; i < matrix.size()/2.0 ; i++ )
+    int M = matrix.size() - 1;
+
+    for (int i = 0; i < matrix.size() / 2.0; i++)
     {
-        for( int j = i ; j < M-i ; j++)
+        for (int j = i; j < M-i; j++)
         {
             int temp = matrix[i][j];
             matrix[i][j] = matrix[M-j][i];
@@ -73,7 +73,7 @@ void matrixRotate90()
 }
 
 // m1,m2 * n1,n2
-void multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
+void Matrix::multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
 {
     int x, i, j;
     int res[m1][n2];
@@ -98,15 +98,16 @@ void multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
     }
 }
 
-void matrixMain()
+void Matrix::matrixMain()
 {
     cout << "Hello from matrixMain" << endl;
 
 
-    vector<vector<int>> matrix = {{ 1, 2, 3 },
-                                  { 4, 5, 6 },
-                                  { 7, 8, 9 }};
+    vector<vector<int>> matrix = {{1, 2, 3},
+                                  {4, 5, 6},
+                                  {7, 8, 9}};
 
     matrixMultiplication();
     matrixRotate90();
 }
+

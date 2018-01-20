@@ -18,19 +18,64 @@ void abssort(float* x, unsigned n)
     );
 }
 
+typedef char* CHARPTR;
+#define PTRCHAR char*
+void callReference(int **arr)
+{
+    cout << arr[3][1] << endl;
+}
 
 int main()
 {
     cout << "Hello, the World!" << endl;
 
-    //linkedListMain();
-    //algoMain();
+    /*  Linkedlist test */
+#if 0
+    LinkedList linklist;
+    linklist.linkedListMain();
+
+    /*  Linkedlist test */
+    algoMain();
+
+    /*  Linkedlist test */
     matrixMain();
-    //stringMain();
-    //sortingMain();
-    //graphMain();
-    //arrayMain();
-    //bitsMain();
-    //memoryMain();
+
+    /*  Linkedlist test */
+    stringMain();
+
+    /*  Linkedlist test */
+    sortingMain();
+
+    /*  Linkedlist test */
+    graphMain();
+
+    /*  Linkedlist test */
+    arrayMain();
+
+    /*  Linkedlist test */
+    bitsMain();
+
+    /*  Linkedlist test */
+    memoryMain();
+
+    /*  Linkedlist test */
+    Matrix matrix;
+    matrix.matrixMain();
+
+    /*  Linkedlist test */
+    fucnPointerMain();
+
+    /*  Linkedlist test */
+    //pointerMain();
+
+
+    TreeClass tree;
+    tree.treeMain();
+
+
+    BackTracking backTracking;
+    backTracking.backTrackMain();
+#endif
+    stringMain();
     return 0;
 }

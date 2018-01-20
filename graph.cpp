@@ -8,32 +8,7 @@
 #include <stack>
 #include "common.h"
 
-// This class represents a directed graph using
-// adjacency list representation
-class Graph
-{
-    int V;    // No. of vertices
-    // Pointer to an array containing adjacency lists
-    std::list<int> *adj;
-    void DFSUtil(int v, std::vector<bool> visited);
-    bool DFSUtilCycle(int s, std::vector<bool> &visited, std::vector<bool> &stackVisited);
-    void topologicalSortUtil(int v, bool visited[], std::stack<int> &Stack);
-public:
-    Graph(int Vertex)
-    {
-        V = Vertex;
-        adj = new std::list<int>[V];
-    }  // Constructor
 
-    // function to add an edge to graph
-    void addEdge(int v, int w);
-    // prints BFS traversal from a given source s
-    void BFS(int s);
-    void DFS(int s);
-    void topologicalSort();
-    friend void printGraph(Graph *graph);
-    bool DFSCycle(int s);
-};
 
 void Graph::addEdge(int v, int w) {
     adj[v].push_back(w);
@@ -41,11 +16,11 @@ void Graph::addEdge(int v, int w) {
 
 void Graph::BFS(int s)
 {
-    std::vector<bool> visited(V,false);
+    vector<bool> visited(V,false);
 
     visited[s] = true;
 
-    std::list<int> queue;
+    list<int> queue;
     queue.push_back(s);
 
     while(!queue.empty())
@@ -101,7 +76,7 @@ bool Graph::DFSCycle(int s)
     std::vector<bool> visited(V,false);
     std::vector<bool> stackVisited(V,false);
 
-    for(int i = 0 ; i< V ; i++)
+    for(int i = 0 ; i < V ; i++)
     {
         if(DFSUtilCycle(i, visited, stackVisited))
         {
@@ -112,11 +87,10 @@ bool Graph::DFSCycle(int s)
     return false;
 }
 
-void Graph::DFSUtil(int s, std::vector<bool> visited)
+void Graph::DFSUtil(int s, vector<bool> visited)
 {
-
     visited[s] = true;
-    std::cout << s << ",";
+    cout << s << ",";
 
     for (auto it = adj[s].begin() ; it != adj[s].end() ; it++ )
     {
@@ -129,19 +103,21 @@ void Graph::DFSUtil(int s, std::vector<bool> visited)
 
 void Graph::DFS(int s)
 {
-    std::vector<bool> visited(V,false);
+    vector<bool> visited(V,false);
     DFSUtil(s, visited);
 }
 
-void printGraph(Graph *graph) {
+void printGraph(Graph *graph)
+{
     for(int i = 0 ; i< graph->V ; i++)
     {
-        std::cout << i << "->";
-        for (auto it = graph->adj[i].begin(); it != graph->adj[i].end(); it++) {
-            std::cout << *it << ",";
+        cout << i << "->";
+        for (auto it = graph->adj[i].begin(); it != graph->adj[i].end(); it++)
+        {
+            cout << *it << ",";
         }
 
-        std::cout << std::endl;
+        cout << endl;
     }
 }
 
@@ -152,11 +128,14 @@ void Graph::topologicalSortUtil(int v, bool visited[], std::stack<int> &Stack)
     visited[v] = true;
 
     // Recur for all the vertices adjacent to this vertex
-    std::list<int>::iterator i;
-    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+    list<int>::iterator i;
+    for (i = adj[v].begin() ; i != adj[v].end() ; ++i)
+    {
         if (!visited[*i])
+        {
             topologicalSortUtil(*i, visited, Stack);
-
+        }
+    }
     // Push current vertex to stack which stores result
     Stack.push(v);
 }
@@ -165,7 +144,7 @@ void Graph::topologicalSortUtil(int v, bool visited[], std::stack<int> &Stack)
 // topologicalSortUtil()
 void Graph::topologicalSort()
 {
-    std::stack<int> Stack;
+    stack<int> Stack;
 
     // Mark all the vertices as not visited
     bool *visited = new bool[V];
@@ -174,12 +153,12 @@ void Graph::topologicalSort()
 
     // Call the recursive helper function to store Topological
     // Sort starting from all vertices one by one
-    for (int i = 0; i < V; i++)
+    for (int i = 0 ; i < V; i++)
         if (visited[i] == false)
             topologicalSortUtil(i, visited, Stack);
 
     // Print contents of stack
-    while (Stack.empty() == false)
+    while (!Stack.empty())
     {
         std::cout << Stack.top() << " ";
         Stack.pop();

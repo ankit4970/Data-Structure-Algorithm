@@ -1,30 +1,33 @@
 //
 // Created by ankit on 9/4/2017.
 //
+#include <time.h>
+#include <sys/time.h>
 #include "common.h"
 
 /****************************************************************************
  * printList
  ***************************************************************************/
-void printList(ListNode *head )
+void LinkedList::printList(ListNode *head )
 {
-    while(head != NULL) {
-        std::cout << head->val << " ";
+    while(head != NULL)
+    {
+        cout << head->val << " ";
         head = head->next;
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 /* ******************************************************************************
  * reverseList -  reverse a given linkedlist
  ******************************************************************************/
-void reverseList(ListNode** head)
+void LinkedList::reverseList(ListNode** head)
 {
     ListNode *pre = nullptr;
     ListNode *cur = *head;
     ListNode *temp = nullptr;
 
-    while(cur != nullptr)
+    while (cur != nullptr)
     {
         temp = cur->next;
         cur->next = pre;
@@ -37,35 +40,35 @@ void reverseList(ListNode** head)
 /* ******************************************************************************
  * deleteFromList -  delete a given number from linkedlist
  ******************************************************************************/
-void deleteFromList(ListNode **head, int dataToDelete)
+void LinkedList::deleteFromList(ListNode **head, int dataToDelete)
 {
-    ListNode *temp = *head;
+    ListNode *cur = *head;
     ListNode *pre = nullptr;
 
     if(*head == nullptr)
     {
-        cout << "Empty list" << std::endl;
+        cout << "Empty list" << endl;
         return;
     }
 
-    while(temp != nullptr)
+    while(cur != nullptr)
     {
-        if(temp->val == dataToDelete)
+        if(cur->val == dataToDelete)
         {
-            if(temp == *head)
+            if(cur == *head)
             {
-                *head = temp->next;
-                delete(temp);
+                *head = cur->next;
+                delete(cur);
                 return;
             }
 
-            pre->next = temp->next;
-            delete(temp);
+            pre->next = cur->next;
+            delete(cur);
             return;
         }
 
-        pre = temp;
-        temp = temp->next;
+        pre = cur;
+        cur = cur->next;
     }
 
     cout << "ListNode not found" << endl;
@@ -74,7 +77,7 @@ void deleteFromList(ListNode **head, int dataToDelete)
 /* ******************************************************************************
  * appendToList -  append given number to the given list
  ******************************************************************************/
-void appendToList(ListNode **head, int data)
+void LinkedList::appendToList(ListNode **head, int data)
 {
     ListNode *newNode = new ListNode(data);
 
@@ -97,14 +100,14 @@ void appendToList(ListNode **head, int data)
 /* ******************************************************************************
  * addTwoNumbers -  add two numbers given as digits in linkedlist
  ******************************************************************************/
-ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+ListNode* LinkedList::addTwoNumbers(ListNode* l1, ListNode* l2)
 {
     ListNode preHead(0), *p = &preHead;
-    int extra = 0;
-    while (l1 || l2 || extra)
+    int carry = 0;
+    while (l1 || l2 || carry)
     {
-        int sum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + extra;
-        extra = sum / 10;
+        int sum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + carry;
+        carry = sum / 10;
         p->next = new ListNode(sum % 10);
         p = p->next;
         l1 = l1 ? l1->next : l1;
@@ -113,45 +116,10 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     return preHead.next;
 }
 
-#if 0
-ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
-{
-    ListNode* head = NULL;
-    ListNode* temp = NULL;
-    ListNode* cur = NULL;
-
-    int reminder = 0;
-    while(l1 || l2 || reminder)
-    {
-        int tempValue = (l1 ? l1->val : 0 )+ (l2 ? l2->val : 0 )+ reminder;
-
-        reminder = tempValue/10;
-        tempValue = tempValue%10;
-
-        temp = new ListNode(tempValue);
-
-        if(head == NULL)
-        {
-            head = temp;
-        }
-        else
-        {
-            cur->next = temp;
-        }
-        cur = temp;
-
-        l1 = l1 ? l1->next : NULL;
-        l2 = l2 ? l2->next : NULL;
-    }
-
-    return head;
-}
-#endif
-
 /* ******************************************************************************
  * findMiddle -  find middle of the linkedlist
  ******************************************************************************/
-ListNode *findMiddle(ListNode *head)
+ListNode* LinkedList::findMiddle(ListNode *head)
 {
     ListNode *slow = head;
     ListNode *fast = head;
@@ -169,9 +137,9 @@ ListNode *findMiddle(ListNode *head)
 }
 
 /* ******************************************************************************
- * addTwoNumbers -  add two numbers given as digits in linkedlist
+ * findMiddleNew -  add two numbers given as digits in linkedlist
  ******************************************************************************/
-ListNode *findMiddleNew(ListNode *head)
+ListNode* LinkedList::findMiddleNew(ListNode *head)
 {
     ListNode *slow = head;
     ListNode *mid = head;
@@ -194,59 +162,14 @@ ListNode *findMiddleNew(ListNode *head)
 }
 
 /* ******************************************************************************
- * mergeTwoSorted -  mergeSorted
- ******************************************************************************/
-ListNode *mergeTwoSorted(ListNode *h1, ListNode *h2)
-{
-    if(!h1)
-        return h2;
-    if(!h2)
-        return h1;
-
-    if(h1->val < h2->val)
-    {
-        h1->next = mergeTwoSorted(h1->next, h2);
-        return h1;
-    }
-    else
-    {
-        h2->next = mergeTwoSorted(h1, h2->next);
-        return h2;
-    }
-}
-
-/* ******************************************************************************
- * insertSorted -  insert Sorted
- ******************************************************************************/
-void insertSorted(ListNode **head, ListNode *temp)
-{
-    ListNode * current = *head;
-    if(*head == nullptr || (*head)->val > temp->val)
-    {
-        temp->next = *head;
-        *head = temp;
-    }
-    else
-    {
-        while(current->next && current->next->val < temp->val)
-        {
-            current = current->next;
-        }
-
-        temp->next = current->next;
-        current->next = temp;
-    }
-}
-
-/* ******************************************************************************
  * findLoop -  find loop in the linkedList
  ******************************************************************************/
-bool findLoop(ListNode *head)
+bool LinkedList::findCycle(ListNode *head)
 {
     ListNode *slow = head;
     ListNode *fast = head;
 
-    while(slow && fast && fast->next)
+    while(fast && fast->next)
     {
         fast = fast->next->next;
         slow = slow->next;
@@ -261,9 +184,102 @@ bool findLoop(ListNode *head)
 }
 
 /* ******************************************************************************
+ * detectAndReturnCycleNode
+ *     Detects cycle in linkedlist and returns the cycle node
+ *******************************************************************************/
+ListNode* LinkedList::detectAndReturnCycleNode(ListNode *head)
+{
+    ListNode *slow = head;
+    ListNode *fast = head;
+    bool isCycle = false;
+    if(head == NULL)
+    {
+        return NULL;
+    }
+    while(fast && fast->next)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+
+        if(fast == slow)
+        {
+            isCycle = true;
+        }
+    }
+
+    if(isCycle)
+    {
+        ListNode *temp = head;
+        while(temp)
+        {
+            slow = fast;
+            while(slow->next != fast && slow->next != temp)
+            {
+                slow = slow->next;
+            }
+            if(slow->next == temp)
+            {
+                //slow->next = NULL;          // If asked to remove cycle, then uncomment this line
+                return temp;
+            }
+            temp = temp->next;
+        }
+    }
+
+    return NULL;
+}
+
+/* ******************************************************************************
+ * mergeTwoSorted -  mergeSorted
+ *******************************************************************************/
+ListNode* LinkedList::mergeTwoSorted(ListNode *h1, ListNode *h2)
+{
+    if (!h1)
+        return h2;
+    if (!h2)
+        return h1;
+
+    if (h1->val < h2->val)
+    {
+        h1->next = mergeTwoSorted(h1->next, h2);
+        return h1;
+    }
+    else
+    {
+        h2->next = mergeTwoSorted(h1, h2->next);
+        return h2;
+    }
+}
+
+/* ******************************************************************************
+ * insertSorted -  insert Sorted
+ ******************************************************************************/
+void LinkedList::insertSorted(ListNode **head, ListNode *temp)
+{
+    ListNode * current = *head;
+    if (*head == nullptr || (*head)->val > temp->val)
+    {
+        temp->next = *head;
+        *head = temp;
+    }
+    else
+    {
+        while (current->next && current->next->val < temp->val)
+        {
+            current = current->next;
+        }
+
+        temp->next = current->next;
+        current->next = temp;
+    }
+}
+
+
+
+/* ******************************************************************************
  * deleteDuplicates -  delete duplicates
  ******************************************************************************/
-ListNode* deleteDuplicates(ListNode* head)
+ListNode* LinkedList::deleteDuplicates(ListNode* head)
 {
     ListNode* newHead = head;
     ListNode* cur = head;
@@ -314,7 +330,7 @@ ListNode* deleteDuplicates(ListNode* head)
 /* ******************************************************************************
  * deleteDuplicatesSorted -  delete duplicates
  ******************************************************************************/
-ListNode* deleteDuplicatesSorted(ListNode* head)
+ListNode* LinkedList::deleteDuplicatesSorted(ListNode* head)
 {
     ListNode* cur = head;
     ListNode* pre = NULL;
@@ -347,31 +363,194 @@ ListNode* deleteDuplicatesSorted(ListNode* head)
 
     return head;
 }
+
+/* ******************************************************************************
+ * rotateCounterClock
+ *      Rotates a given list by k elements counter clockwise
+ * ex.
+ *      input  : list - 10->20->30->40->50->60 and k is 4
+ *      output : 50->60->10->20->30->40
+ ******************************************************************************/
+void LinkedList::rotateCounterClock(ListNode **head_ref, int k)
+{
+    ListNode* kth = *head_ref;
+    ListNode* last = *head_ref;
+    int count = 1;
+
+    if ( *head_ref == NULL)
+    {
+        return;
+    }
+
+    while (last->next != NULL)
+    {
+        if(count == k)
+        {
+            kth = last;
+        }
+        last = last->next;
+        count++;                // Will be length
+
+    }
+
+    if (count == k )
+    {
+        return;
+    }
+    else
+    {
+        last->next = *head_ref;
+        *head_ref = kth->next;
+        kth->next = NULL;
+    }
+}
+/* ******************************************************************************
+ * segEvenOdd
+ *      Segregates even and odd elements in a linkedlist
+ * ex.
+ *      input  : 1->2->4->3->6->5->7
+ *      output : 2->4->6->3->1->5->7
+ * Note: Order may get changed
+ ******************************************************************************/
+void LinkedList::segEvenOdd(ListNode* head)
+{
+    struct timeval  tv1, tv2;
+    gettimeofday(&tv1, NULL);
+
+    ListNode* even = head;
+    ListNode* cur = head;
+
+    while (cur)
+    {
+        if (!(cur->val%2) && cur != even)   // if even and not same
+        {
+            while(cur != even)
+            {
+                int temp = cur->val;
+                cur->val = even->val;
+                even->val = temp;
+                even = even->next;
+            }
+        }
+        else if(!(cur->val%2) && cur == even) // even and same
+        {
+            even = even->next;
+        }
+        cur = cur->next;
+    }
+
+    gettimeofday(&tv2, NULL);
+    printf ("Total time = %f seconds\n",
+            (double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
+            (double) (tv2.tv_sec - tv1.tv_sec));
+}
+
+ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
+{
+    stack <ListNode*> s1,s2;
+    ListNode* ret;
+    ListNode* res;
+    int sum=0;
+    int carry=0;
+    while(l1!=NULL || l2!=NULL)
+    {
+        if(l1)
+        {
+            s1.push(l1);
+            l1=l1->next;
+        }
+
+        if(l2)
+        {
+            s2.push(l2);
+            l2=l2->next;
+        }
+    }
+    while(!s1.empty() || !s2.empty())
+    {
+        if(s1.size()>0 && s2.size() >0)
+        {
+            sum = s1.top()->val + s2.top()->val + carry;
+            cout<<" stack "<<s1.top()->val<<" "<<s2.top()->val<<endl;
+            s1.pop();
+            s2.pop();
+            carry = sum / 10;
+            cout<<" here "<<sum<<endl;
+            if (sum>9)
+                sum = sum%10;
+            ListNode *temp = new ListNode(sum);
+            if(res == NULL)
+            {
+                res =temp;
+                ret = res;
+            }
+            else
+            {
+                res->next = temp;
+                res = res->next;
+            }
+            //if(s1.size()==1) break;
+        }
+        if(s1.size()>0 && s2.size() ==0)
+        {
+            sum = s1.top()->val + carry;
+            cout<<" stack "<<s1.top()->val<<endl;
+            s1.pop();
+            carry = sum / 10;
+            cout<<" here2 "<<sum<<endl;
+            if (sum>9)
+                sum = sum%10;
+            ListNode *temp = new ListNode(sum);
+            res->next = temp;
+            res = res->next;
+        }
+        if(!s2.empty())
+        {
+            sum = s2.top()->val + carry;
+            s2.pop();
+            carry = sum / 10;
+            cout<<" here3 "<<sum<<endl;
+            if (sum>9) sum =
+                           sum%10;
+            ListNode *temp = new ListNode(sum);
+            res->next = temp;
+            res = res->next;
+        }
+    }
+    return ret;
+}
+
+
 /* ******************************************************************************
  * linkedListMain
  ******************************************************************************/
-void linkedListMain()
+void LinkedList::linkedListMain()
 {
     std::cout << "Hello from linkedListMain" << std::endl;
-
-    ListNode *head = nullptr;
-    ListNode *head1 = nullptr;
-
-    appendToList(&head, 4);
-    appendToList(&head, 5);
-    appendToList(&head, 6);
-    appendToList(&head, 6);
-    appendToList(&head, 7);
-
-    printList(head);
-
-    deleteDuplicatesSorted(head);
-    printList(head);
-    appendToList(&head, 7);
-    printList(head);
-    deleteDuplicates(head);
-    printList(head);
 #if 0
+    ListNode *head = nullptr;
+
+    appendToList(&head, 1);
+    appendToList(&head, 2);
+    appendToList(&head, 4);
+    appendToList(&head, 3);
+    appendToList(&head, 6);
+    appendToList(&head, 5);
+    appendToList(&head, 7);
+
+    printList(head);
+
+//    deleteDuplicatesSorted(head);
+//    printList(head);
+//    appendToList(&head, 7);
+//    printList(head);
+//    deleteDuplicates(head);
+//    printList(head);
+
+    segEvenOdd(head);
+    cout << "After segregation" << endl;
+    printList(head);
+
     std::cout << "List after deletion" << std::endl;
     deleteFromList(&head, 6);
     printList(head);
@@ -392,5 +571,19 @@ void linkedListMain()
 #endif
     //ListNode* sum = addTwoNumbers(head, head1);
     //printList(sum);
+
+    ListNode* l1 = nullptr;
+    appendToList(&l1, 7);
+    appendToList(&l1, 2);
+    appendToList(&l1, 4);
+    appendToList(&l1, 3);
+
+    ListNode* l2 = nullptr;
+    appendToList(&l2, 5);
+    appendToList(&l2, 6);
+    appendToList(&l2, 4);
+
+    addTwoNumbers2(l1,l2);
+
 
 }

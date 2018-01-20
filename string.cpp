@@ -5,8 +5,9 @@
 #include <cstring>
 #include <chrono>
 #include <vector>
-
-
+#include <map>
+#include <unordered_map>
+#include <math.h>
 
 #if 0
 bool isSubsequence(char* s, char* t)
@@ -44,21 +45,23 @@ void stringReverseWords(char *string)
     char *begin = string;
     char *temp = string;
 
-    while(*temp)
+    if (string)
     {
-        temp++;
-        if(*temp == '\0')
+        while (*temp)
         {
-            reverse(begin, temp-1);
+            temp++;
+            if (*temp == '\0')
+            {
+                reverse(begin, temp-1);
+            }
+            else if (*temp == ' ')
+            {
+                reverse(begin, temp-1);
+                begin = temp+1;
+            }
         }
-        else if(*temp == ' ')
-        {
-            reverse(begin, temp-1);
-            begin = temp+1;
-        }
+        reverse(string, temp-1);
     }
-
-    reverse(string, temp-1);
 }
 
 /* ************************************************************************************************
@@ -126,6 +129,39 @@ void removeSpaces(char *str)
     *start = '\0';
 }
 
+//912261606161
+
+// abcdea dsfsdf
+/*
+void removeDuplicates(char* str)
+{
+    unsigned int readIndex = 0;
+    unsigned int writeIndex = 0;
+    char* stri = str;
+    char Map[256] = {};
+    int count = 0;
+
+    while (stri[readIndex] != NULL)
+    {
+        if (stri[readIndex] == ' ')
+        {
+            count++;
+        }
+        if (Map[stri[readIndex]] <= 0+count)
+        {
+            stri[writeIndex] = stri[readIndex];
+            Map[stri[readIndex]]++;
+            readIndex++;
+            writeIndex++;
+
+        }
+        else
+        {
+            readIndex++;
+        }
+    }
+    stri[writeIndex] = '\0';
+}*/
 /* ************************************************************************************************
  * Searching for Patterns (Naive solution)
  *      Searching all occurrences of pattern(string) in target(string)
@@ -223,6 +259,34 @@ int compress(vector<char>& chars)
     return writeIndex;
 }
 
+
+
+char* compress(char* chars)
+{
+    int writeIndex = 0;
+    int readIndex = 0;
+    int length = strlen(chars);
+
+    char *newString = (char*)malloc(2*length-1);
+
+    for (int i=0 ; i < length-1 ; ++i )
+    {
+        if (i+1 == length-1 || chars[i+1] != chars[i] )
+        {
+            newString[writeIndex++] = chars[readIndex];
+            string s = to_string(i - readIndex + 1);
+            for (char c : s)
+            {
+                newString[writeIndex++] = c;
+            }
+            readIndex = i+1;
+        }
+    }
+
+    newString[writeIndex] = '\0';
+    return newString;
+}
+
 /* ************************************************************************************************
  * lps
  *      Returns the length of the longest palindromic subsequence in string
@@ -254,6 +318,106 @@ int lps(char *str)
     cout << "lps is " << L[0][n-1] << endl;
     return L[0][n-1];
 }
+
+string longestPalindrome(string s)
+{
+    if (s.empty())
+        return "";
+
+    if (s.size() == 1)
+        return s;
+
+    int min_start = 0, max_len = 1;
+    for (int i = 0; i < s.size();)
+    {
+        if (s.size() - i <= max_len / 2)
+            break;
+        int j = i, k = i;
+        while (k < s.size()-1 && s[k+1] == s[k])
+            ++k; // Skip duplicate characters.
+
+        i = k+1;
+
+        while (k < s.size()-1 && j > 0 && s[k + 1] == s[j - 1])
+        {
+            ++k;
+            --j;
+        } // Expand.
+
+        int new_len = k - j + 1;
+        if (new_len > max_len)
+        {
+            min_start = j;
+            max_len = new_len;
+        }
+    }
+    return s.substr(min_start, max_len);
+}
+
+
+vector<int> subSequenceTag(vector<string>& targetList, vector<string>& availableTagList)
+{
+    map<string,bool> MapTarget;
+    for (auto list : targetList)
+    {
+        MapTarget.insert(std::pair<string,bool>(list,true));
+    }
+    int diff = 0;
+    int startIndex = 0;
+    int endIndex = 0;
+    int count = 0;
+    map<string,bool> MapAvailable;
+    int finalStart = 0;
+    int finalEnd = 0;
+    int diffMin = INT_MAX;
+    vector<int> ret ;
+    for(int i = 0 ; i < availableTagList.size() ; i++)
+    {
+        for(int j = i ; j < availableTagList.size()-i ; j++)
+        {
+            auto it1 = MapTarget.find(availableTagList[j]);
+            if (it1 != MapTarget.end())
+            {
+                auto it2 = MapAvailable.find(availableTagList[j]);
+                if (it2 == MapAvailable.end())
+                {
+                    MapAvailable.insert(std::pair<string,bool>(availableTagList[j], true));
+                    if (count == 0)
+                    {
+                        startIndex = j;
+                    }
+                    if (count == 2)
+                    {
+                        endIndex = j;
+                    }
+                    count++;
+
+                }
+            }
+        }
+
+        MapAvailable.clear();
+        if(count == 3) {
+            //cout << "Start index is : " << startIndex << "End Index : " << endIndex << endl;
+
+            if (diffMin > (endIndex - startIndex))
+            {
+                diffMin = (endIndex - startIndex);
+                finalStart = startIndex;
+                finalEnd = endIndex;
+            }
+
+
+            //cout << "Min diff " << diffMin << endl;
+        }
+        count = 0;
+        startIndex = 0;
+        endIndex = 0;
+    }
+    ret.push_back(finalStart);
+    ret.push_back(finalEnd);
+    cout << "Final Start index is : " << finalStart << " Final End Index : " << finalEnd << endl;
+}
 /*
 **************************************************************************************************
  * stringMain
@@ -262,20 +426,28 @@ void stringMain()
 {
     cout << "Hello from stringMain" << endl;
     char str[] = "BBBAABACBBAA";
-    char pattern[] = "ABACB";
+    char* recv  = NULL;
+    //char pattern[] = "ABACB";
+    //lps(str);
+    //searchPattern(str,pattern);
+    //searchPattern1(str,pattern);
 
-    lps(str);
+    //char stri[] = "This is a test";
+    //maxOccuringcharacter(stri);
+    //removeSpaces(stri);
+    //cout << "After removing spaes " << stri << endl;
+    //vector<char> v= {'a','a','b','c','d','d','d','a','a'};
 
-    searchPattern(str,pattern);
-    searchPattern1(str,pattern);
+    //recv = compress(str);
+    //printf("%s\n",recv);
+    //free(recv);
+    //char stri[] = "abbdea cde aabb";
+    //removeDuplicates(stri);
+    //cout << stri << endl;
 
-    char stri[] = "This is a test";
-    maxOccuringcharacter(stri);
-    removeSpaces(stri);
-    cout << "After removing spaes " << stri << endl;
-    vector<char> v= {'a','a','b','c','d','d','d','a','a'};
-
-    compress(v);
+    vector<string> targetList ={"made","in","spain"};
+    vector<string> availableTagList = {"made","weather","forecast","says","that","made","rain","in","spain","stays"};
+    subSequenceTag(targetList, availableTagList);
 
     return;
 }

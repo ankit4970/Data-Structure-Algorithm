@@ -12,3 +12,9 @@ void foo(int pInt)
 {
     std::cout << "Function with integer called" << std::endl;
 }
+
+void pointerMain()
+{
+    foo(NULL);
+    foo(nullptr);
+}

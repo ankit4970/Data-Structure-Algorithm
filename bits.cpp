@@ -5,7 +5,14 @@
 #include "common.h"
 #include <cstring>
 
-#define ISPOWEROFTWO(n) (n && !(n&(n-1)))   // returns true if given number is power of 2 else false
+#define ISPOWEROFTWO(n) (n && !(n&(n-1)))   // returns true if given number is power of 2 else false, 0 false
+
+// Bit-fields
+typedef struct size
+{
+    int a:1;   // same 4 bytes
+    int b:31;
+} mystruct;
 
 /* **************************************************************************************************
  * signOfNumber
@@ -23,7 +30,7 @@ void signOfNumber(int v)
 int noOfSetBits(int n)
 {
     int count =0;
-    while(n)
+    while (n)
     {
         n = (n & (n-1));
         count++;
@@ -57,22 +64,39 @@ uint32_t swapEvenOdd(uint32_t num)
 
     return swapBits;
 }
+/* **************************************************************************************************
+* add
+ * Add two integers without + - operator
+*************************************************************************************************/
+int add(int a, int b)
+{
+    int sum = 0;
+    while (b != 0)
+    {
+        sum = a^b;
+        b = (a&b)<<1;
+        a = sum;
+    }
+    return sum;
+}
 
 /* **************************************************************************************************
  * reverseBits
  ************************************************************************************************/
-void reverseBits()
+uint32_t reverseBits()
 {
-    unsigned int v = 7;     // input bits to be reversed
-    unsigned int r = v; // r will be reversed bits of v; first get LSB of v
-    int s = sizeof(v) * 8 - 1; // extra shift needed at end
+    unsigned int v = 7;         // input bits to be reversed
+    unsigned int r = v;         // r will be reversed bits of v; first get LSB of v
+    int s = sizeof(v) * 8 - 1;  // extra shift needed at end
 
-    for (v >>= 1; v; v >>= 1) {
+    for (v >>= 1 ; v ; v >>= 1)
+    {
         r <<= 1;
-        r |= v & 1;
+        r |= v & 0x1;
         s--;
     }
-    r <<= s; // shift when v's highest bits are zero
+    r <<= s;                    // shift when v's highest bits are zero
+    return r;
 }
 
 /* **************************************************************************************************
@@ -83,11 +107,11 @@ void primeNumbers(int n)
     bool arr[n/2] ={};
     memset(arr, false, sizeof(arr));
 
-    for(int i=3 ; i*i < n  ; i=i+2 )
+    for(int i = 3 ; i*i < n  ; i = i+2 )
     {
         if(arr[i/2] == false)
         {
-            for (int j=i*i; j<n; j+=i*2)
+            for (int j = i*i ; j < n ; j+=i*2)
             {
                 arr[j/2] = true;
             }
@@ -95,9 +119,9 @@ void primeNumbers(int n)
     }
     cout << 2 << " ";
 
-    for (int i=3; i<n ; i+=2)
+    for (int i = 3; i < n ; i+=2)
     {
-        if (arr[i / 2] == false)
+        if (arr[i/2] == false)
         {
             cout << i << " " ;
         }
@@ -114,4 +138,6 @@ void bitsMain()
     primeNumbers(30);
     cout << ISPOWEROFTWO(0) << endl;
     cout << ISPOWEROFTWO(32) << endl;
+
+    cout << "size of " << sizeof(mystruct) << endl;
 }

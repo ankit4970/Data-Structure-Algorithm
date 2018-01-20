@@ -12,7 +12,6 @@
 #include <map>
 #include <cmath>
 #include <set>
-//#include <bits/unordered_map.h>
 
 using namespace std;
 
@@ -65,7 +64,8 @@ bool isSubsequenceNew(char* s, char* t) {
     return !*s;
 }
 
-bool isSubsequence(char* s, char* t) {
+bool isSubsequence(char* s, char* t)
+{
 
     if(strlen(s) == 0)
     {
@@ -157,7 +157,6 @@ int lcs_dp( char *X, char *Y, int m, int n )
 
             cout << L[i][j] << ",";
         }
-
         cout << endl;
     }
 
@@ -368,6 +367,17 @@ bool solveMaze(int maze[N][N]) {
     return true;
 
 }
+// Stock buy and sell (Multiple transactions allowed)
+void maxProfitMulti()
+{
+    vector<int> prices = {7, 1, 3, 8, 6, 9};
+    int ret = 0;
+    for (int p = 1; p < prices.size(); ++p)
+    {
+        ret += max(prices[p] - prices[p - 1], 0);
+    }
+    cout << ret << endl;
+}
 
 // Stock buy and sell (Single transactions allowed)
 void maxProfit()
@@ -382,19 +392,6 @@ void maxProfit()
     }
     cout << maxPro << endl;
 }
-
-// Stock buy and sell (Multiple transactions allowed)
-void maxProfitMulti()
-{
-    vector<int> prices = {7, 1, 3, 8, 6, 9};
-    int ret = 0;
-    for (size_t p = 1; p < prices.size(); ++p)
-    {
-        ret += max(prices[p] - prices[p - 1], 0);
-    }
-    cout << ret << endl;
-}
-
 
 void maxProfitTwo()
 {

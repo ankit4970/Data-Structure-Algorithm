@@ -76,11 +76,11 @@ void heapify(int arr[], int n, int i)
 bool heapSort(int array[], int len)
 {
     // Build heap (rearrange array)
-    for (int i = len/2 - 1; i >= 0; i--)
+    for (int i=len/2-1; i>=0; i--)
         heapify(array, len, i);
 
     // One by one extract an element from heap
-    for (int i=len-1; i>=0; i--)
+    for (int i=len-1 ; i>=0 ; i--)
     {
         // Move current root(first/top element) to end
         swap(array[0], array[i]);
@@ -91,20 +91,20 @@ bool heapSort(int array[], int len)
 }
 
 
-bool merge(int arr[],int start, int mid, int end)
+bool merge(int arr[], int start, int mid, int end)
 {
     int n1 = mid-start+1;
     int n2 = end-mid;
-    int i =0,j=0,k=0;
+    int i =0, j=0, k=0;
 
     int L[n1],R[n2];
 
-    for(i = 0; i < n1 ; i++)
+    for (i = 0; i < n1 ; i++)
     {
         L[i] = arr[start+i];
     }
 
-    for(j=0 ; j < n2 ; j++)
+    for (j=0 ; j < n2 ; j++)
     {
         R[j] = arr[mid+1+j];
     }
@@ -113,7 +113,7 @@ bool merge(int arr[],int start, int mid, int end)
     j=0;
     k=start;
 
-    while(i<n1 && j<n2)
+    while (i < n1 && j < n2)
     {
         if(L[i] <= R[j])
         {
@@ -128,14 +128,14 @@ bool merge(int arr[],int start, int mid, int end)
         k++;
     }
 
-    while(i<n1)
+    while (i<n1)
     {
         arr[k] = L[i];
         i++;
         k++;
     }
 
-    while(j<n2)
+    while (j<n2)
     {
         arr[k] = R[j];
         j++;
@@ -163,16 +163,15 @@ bool merge(int arr[],int start, int mid, int end)
 **************************************************************************************************/
 bool mergeSort(int array[], int start, int end)
 {
-    int midPoint =0;
+    int midPoint = 0;
 
-    if(start <  end)
+    if (start <  end)
     {
-        midPoint = start+((end-start)/2);
+        midPoint = start + ((end-start)/2);
         mergeSort(array, start, midPoint);
-        mergeSort(array, midPoint+1,end);
-        merge(array,start,midPoint,end);
+        mergeSort(array, midPoint+1, end);
+        merge(array, start, midPoint, end);
     }
-
     return true;
 }
 
@@ -200,7 +199,7 @@ int partition(int array[], int low, int high)
     {
         if (array[j] <= pivot)
         {
-            swap(array,j,lowIndex);
+            swap(array, j, lowIndex);
             lowIndex++;
         }
     }
@@ -217,13 +216,19 @@ void quickSort(int array[], int low, int high)
 
     if(low < high)
     {
-        pivot = partition(array,low,high);
-        quickSort(array,low,pivot-1);
-        quickSort(array,pivot+1,high);
+        pivot = partition(array, low, high);
+        quickSort(array, low, pivot-1);
+        quickSort(array, pivot+1, high);
     }
 }
 
-int partitionNew(int array[], int low, int high)
+/* *************************************************************************************************
+* mThLargest - Finds the mth largest element from array
+*  We use quick Sort to take advantage of the fact that after each iteration pivot element is located
+*  at its final position. If that is the mth element we return it, else narrow down down the search
+*  between pivot and start/end
+**************************************************************************************************/
+int partitionLargest(int array[], int low, int high)
 {
     int pivot = array[high];
     cout << "pivot is : " << pivot << std::endl;
@@ -248,7 +253,7 @@ int mThLargest(int arr[], int low, int high, int m)
 
     if(low < high)
     {
-        newPivot = partitionNew(arr, low, high);
+        newPivot = partitionLargest(arr, low, high);
         if(newPivot ==  m)
         {
             return arr[m];
@@ -279,7 +284,6 @@ int mThLargest(int arr[], int low, int high, int m)
 * Space Complexity 	| 	Worst Case  	: O(1)	|
 * -----------------------------------------------
 **************************************************************************************************/
-
 bool bubbleSort(int array[], int len)
 {
     int  i=0,j=0;
@@ -331,14 +335,14 @@ bool insertionSort(int array[], int len)
     int key = 0;
     int index = 0;
 
-    for(int i=1 ; i<len ; i++)
+    for (int i = 1 ; i < len ; i++)
     {
         index = i;
         key = array[i];
 
-        for(int j = i-1 ; j >= 0 ; j--)
+        for (int j = i-1 ; j >= 0 ; j--)
         {
-            if(key < array[j])
+            if (key < array[j])
             {
                 array[index] = array[j];
                 index = j;
