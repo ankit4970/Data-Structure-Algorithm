@@ -1,12 +1,16 @@
-//
-// Created by ankit on 10/4/2017.
-//
+/* **************************************************************************************
+*   @file     		    matrix.cpp
+*   @brief              This is main source file for Matrix examples in C/C++.
+*   @version            Revision: 1.00
+*   @date               10/4/17.
+****************************************************************************************/
+
+#include <algorithm>
+#include <queue>
 #include "common.h"
-#include <vector>
-#include <cmath>
+#include "matrix.h"
 
-
-void Matrix::printMatrix(vector<vector<int>> &matrix)
+void MatrixClass::printMatrix(vector<vector<int>>& matrix)
 {
     for (int i = 0; i < matrix.size(); i++)
     {
@@ -18,7 +22,7 @@ void Matrix::printMatrix(vector<vector<int>> &matrix)
     }
 }
 
-void Matrix::matrixMultiplication() {
+void MatrixClass::matrixMultiplication() {
     vector<vector<int>> matrix1 = {
         {1, 1, 1},
         {1, 1, 1},
@@ -48,7 +52,7 @@ void Matrix::matrixMultiplication() {
     printMatrix(res);
 }
 
-void Matrix::matrixRotate90()
+void MatrixClass::matrixRotate90()
 {
     vector<vector<int>> matrix = {
         {1, 2, 3},
@@ -73,7 +77,7 @@ void Matrix::matrixRotate90()
 }
 
 // m1,m2 * n1,n2
-void Matrix::multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
+void MatrixClass::multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
 {
     int x, i, j;
     int res[m1][n2];
@@ -98,7 +102,59 @@ void Matrix::multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat2)
     }
 }
 
-void Matrix::matrixMain()
+
+int kthSmallest(vector<vector<int>>& matrix, int k) {
+
+    priority_queue<int> pq;
+
+    int i, j, cnt = 0;
+
+    for (i = 0; i < matrix.size(); i++) {
+        for (j = 0; j < matrix[0].size(); j++) {
+            if (cnt < k)
+            {
+                pq.push(matrix[i][j]);
+                cnt++;
+                continue;
+            }
+            if (pq.top() > matrix[i][j])
+            {
+                pq.pop();
+                pq.push(matrix[i][j]);
+            }
+        }
+    }
+
+    return pq.top();
+}
+
+int kthSmallestNew(vector<vector<int>>& matrix, int k)
+{
+    int n = matrix.size();
+    int le = matrix[0][0], ri = matrix[n - 1][n - 1];
+    int mid = 0;
+    while (le < ri)
+    {
+        mid = le + (ri-le)/2;
+        int num = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int pos = upper_bound(matrix[i].begin(), matrix[i].end(), mid) - matrix[i].begin();
+            num += pos;
+        }
+        if (num < k)
+        {
+            le = mid + 1;
+        }
+        else
+        {
+            ri = mid;
+        }
+    }
+    return le;
+}
+
+void MatrixClass::matrixMain()
 {
     cout << "Hello from matrixMain" << endl;
 

@@ -1,14 +1,18 @@
-//
-// Created by ankit on 9/20/2017.
-//
-#include "common.h"
-#include <cstring>
-#include <chrono>
-#include <vector>
-#include <map>
-#include <unordered_map>
-#include <math.h>
+/* **************************************************************************************
+*   @file     		    string.cpp
+*   @brief              This source file contains string problems in C/C++.
+*   @version            Revision: 1.00
+*   @date               09/20/17
+*   @author             ankit
+****************************************************************************************/
 
+
+
+#include <limits.h>
+#include <cstring>
+#include "mystring.h"
+
+using namespace std;
 #if 0
 bool isSubsequence(char* s, char* t)
 {
@@ -24,7 +28,7 @@ bool isSubsequence(char* s, char* t)
    ex. input : string
        output : gnirts
  ************************************************************************************************/
-void reverse(char *begin, char *end)
+void StringClass::reverse(char *begin, char *end)
 {
     char temp;
     while (begin < end)
@@ -40,7 +44,7 @@ void reverse(char *begin, char *end)
    ex. input : this is a string
        output : string a is this
  ************************************************************************************************/
-void stringReverseWords(char *string)
+void StringClass::stringReverseWords(char *string)
 {
     char *begin = string;
     char *temp = string;
@@ -69,7 +73,7 @@ void stringReverseWords(char *string)
    i.e. input : aaddddaa output : is palindrome
        input : abcded   output : is not palindrome
  ************************************************************************************************/
-void isPalindrome(char str[])
+void StringClass::isPalindrome(char str[])
 {
     // Start from leftmost and rightmost corners of str
     int l = 0;
@@ -92,7 +96,7 @@ void isPalindrome(char str[])
    i.e. input : aaddddaa output : is palindrome
        input : abcded   output : is not palindrome
  ************************************************************************************************/
-void maxOccuringcharacter(char *str)
+void StringClass::maxOccuringcharacter(char *str)
 {
     int map[256]= {};
     int maximum = 0;
@@ -114,7 +118,7 @@ void maxOccuringcharacter(char *str)
 /* ************************************************************************************************
  * removeSpaces Check if a string is palindrome
  ************************************************************************************************/
-void removeSpaces(char *str)
+void StringClass::removeSpaces(char *str)
 {
     char *cur = str;
     char *start = str;
@@ -129,7 +133,7 @@ void removeSpaces(char *str)
     *start = '\0';
 }
 
-//912261606161
+
 
 // abcdea dsfsdf
 /*
@@ -167,7 +171,7 @@ void removeDuplicates(char* str)
  *      Searching all occurrences of pattern(string) in target(string)
  *      Similar to strstr
  *************************************************************************************************/
-bool searchPattern(char* target, char* pattern)
+bool StringClass::searchPattern(char* target, char* pattern)
 {
     int M = strlen(target);
     int N = strlen(pattern);
@@ -198,7 +202,7 @@ bool searchPattern(char* target, char* pattern)
  * Optimized
  * assumption : pattern has all unique characters
  ************************************************************************************************/
-bool searchPattern1(char* target, char* pattern)
+bool StringClass::searchPattern1(char* target, char* pattern)
 {
     int m = strlen(target);
     int n = strlen(pattern);
@@ -236,7 +240,7 @@ bool searchPattern1(char* target, char* pattern)
 /* ************************************************************************************************
  * Compress a string
  ************************************************************************************************/
-int compress(vector<char>& chars)
+int StringClass::compress(vector<char>& chars)
 {
     int curIndex = 0, writeIndex = 0;
     int readIndex = 0;
@@ -261,7 +265,7 @@ int compress(vector<char>& chars)
 
 
 
-char* compress(char* chars)
+char* StringClass::compress(char* chars)
 {
     int writeIndex = 0;
     int readIndex = 0;
@@ -286,25 +290,24 @@ char* compress(char* chars)
     newString[writeIndex] = '\0';
     return newString;
 }
-
+#if 0 // n error
 /* ************************************************************************************************
- * lps
+ * longestPalindromeSubsequence
  *      Returns the length of the longest palindromic subsequence in string
  *************************************************************************************************/
-int lps(char *str)
+int StringClass::longestPalindromeSubsequence(std::string str)
 {
-    int n = strlen(str);
-    int i, j, cl;
-    int L[n][n]={};  // Create a table to store results of subproblems
+    vector<vector<int>> table(str.length()+1,vector<int>(str.length(),0));
 
     // Strings of length 1 are palindrome of lentgh 1
-    for (i = 0; i < n; i++)
-        L[i][i] = 1;
-
-    // cl is length of substring
-    for (cl=2; cl<=n; cl++)
+    for (int i = 0; i < str.length(); ++i)
     {
-        for (i=0; i<n-cl+1; i++)
+        table[i][i] = 1;
+    }
+
+    for (int length = 2 ; length <= str.length() ; ++length)
+    {
+        for (int i = 0 ; i < n-cl+1; ++i)
         {
             j = i+cl-1;
             if (str[i] == str[j] && cl == 2)
@@ -318,8 +321,12 @@ int lps(char *str)
     cout << "lps is " << L[0][n-1] << endl;
     return L[0][n-1];
 }
-
-string longestPalindrome(string s)
+#endif
+/* ************************************************************************************************
+ * longestPalindromeSubstring
+ *      Returns the length of the longest palindromic substring
+ *************************************************************************************************/
+string StringClass::longestPalindromeSubstring(std::string s)
 {
     if (s.empty())
         return "";
@@ -354,8 +361,63 @@ string longestPalindrome(string s)
     return s.substr(min_start, max_len);
 }
 
+//{"in","the","spain"};
+//{"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
+vector<int> StringClass::subSequenceTag(vector<std::string>& targetList, vector<std::string>& availableTagList)
+{
+    map<string,int> MapTarget;
+    cout << targetList.size()<<endl;
+    cout << availableTagList.size() <<endl;
 
-vector<int> subSequenceTag(vector<string>& targetList, vector<string>& availableTagList)
+    for (auto list : targetList)
+    {
+        MapTarget[list]++;
+    }
+
+    int startIndex = 0;
+    int endIndex = 0;
+    int count = targetList.size();
+    map<string,bool> MapAvailable;
+    int finalStart = 0;
+    int finalEnd = 0;
+    int diffMin = INT_MAX;
+    vector<int> ret;
+
+    while (endIndex < availableTagList.size())
+    {
+        auto it1 = MapTarget.find(availableTagList[endIndex]);
+        if (it1 != MapTarget.end() && MapTarget[it1->first] > 0 )
+        {
+            MapTarget[it1->first]--;
+            count--;
+        }
+
+        while (count == 0)
+        {
+            cout << "In while " << startIndex << ","<< endIndex <<endl;
+            if (diffMin > (endIndex - startIndex))
+            {
+                diffMin = (endIndex - startIndex);
+                finalStart = startIndex;
+                finalEnd = endIndex;
+            }
+
+            auto it1 = MapTarget.find(availableTagList[startIndex]);
+            if (it1 != MapTarget.end() )
+            {
+                MapTarget[it1->first]++;
+                count++;
+            }
+            startIndex++;
+        }
+        endIndex++;
+    }
+
+    cout << "Final Start index is : " << finalStart << " Final End Index : " << finalEnd << endl;
+}
+
+#if 0
+vector<int> StringClass::subSequenceTagNew(vector<std::string>& targetList, vector<std::string>& availableTagList)
 {
     map<string,bool> MapTarget;
     for (auto list : targetList)
@@ -373,42 +435,39 @@ vector<int> subSequenceTag(vector<string>& targetList, vector<string>& available
     vector<int> ret ;
     for(int i = 0 ; i < availableTagList.size() ; i++)
     {
-        for(int j = i ; j < availableTagList.size()-i ; j++)
+        while(count !)
         {
-            auto it1 = MapTarget.find(availableTagList[j]);
-            if (it1 != MapTarget.end())
-            {
-                auto it2 = MapAvailable.find(availableTagList[j]);
-                if (it2 == MapAvailable.end())
-                {
-                    MapAvailable.insert(std::pair<string,bool>(availableTagList[j], true));
-                    if (count == 0)
-                    {
-                        startIndex = j;
-                    }
-                    if (count == 2)
-                    {
-                        endIndex = j;
-                    }
-                    count++;
 
+        }
+        auto it1 = MapTarget.find(availableTagList[j]);
+        if (it1 != MapTarget.end())
+        {
+            auto it2 = MapAvailable.find(availableTagList[j]);
+            if (it2 == MapAvailable.end())
+            {
+                MapAvailable.insert(std::pair<string,bool>(availableTagList[j], true));
+                if (count == 0)
+                {
+                    startIndex = j;
                 }
+                if (count == 2)
+                {
+                    endIndex = j;
+                }
+                count++;
             }
         }
 
-        MapAvailable.clear();
-        if(count == 3) {
-            //cout << "Start index is : " << startIndex << "End Index : " << endIndex << endl;
 
+        MapAvailable.clear();
+        if(count == 3)
+        {
             if (diffMin > (endIndex - startIndex))
             {
                 diffMin = (endIndex - startIndex);
                 finalStart = startIndex;
                 finalEnd = endIndex;
             }
-
-
-            //cout << "Min diff " << diffMin << endl;
         }
         count = 0;
         startIndex = 0;
@@ -418,11 +477,12 @@ vector<int> subSequenceTag(vector<string>& targetList, vector<string>& available
     ret.push_back(finalEnd);
     cout << "Final Start index is : " << finalStart << " Final End Index : " << finalEnd << endl;
 }
+#endif
 /*
 **************************************************************************************************
  * stringMain
  ************************************************************************************************/
-void stringMain()
+void StringClass::stringMain()
 {
     cout << "Hello from stringMain" << endl;
     char str[] = "BBBAABACBBAA";
@@ -445,8 +505,8 @@ void stringMain()
     //removeDuplicates(stri);
     //cout << stri << endl;
 
-    vector<string> targetList ={"made","in","spain"};
-    vector<string> availableTagList = {"made","weather","forecast","says","that","made","rain","in","spain","stays"};
+    vector<string> targetList ={"in","the","spain"};
+    vector<string> availableTagList = {"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
     subSequenceTag(targetList, availableTagList);
 
     return;

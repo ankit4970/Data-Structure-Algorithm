@@ -3,6 +3,9 @@
 //
 #include <iostream>
 
+typedef char* CHARPTR;
+#define PTRCHAR char*
+
 void foo(void *pVoid)
 {
     std::cout << "Function with pointer called" << std::endl;

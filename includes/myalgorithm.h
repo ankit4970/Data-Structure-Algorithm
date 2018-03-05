@@ -1,0 +1,8 @@
+//
+// Created by ankit on 1/22/2018.
+//
+
+#ifndef INTERVIEW_MYALGORITHM_H
+#define INTERVIEW_MYALGORITHM_H
+
+#endif //INTERVIEW_MYALGORITHM_H

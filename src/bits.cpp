@@ -2,10 +2,12 @@
 // Created by ankit on 9/20/2017.
 //
 
-#include "common.h"
 #include <cstring>
+#include "common.h"
+#include "bits.h"
 
 #define ISPOWEROFTWO(n) (n && !(n&(n-1)))   // returns true if given number is power of 2 else false, 0 false
+#define MY_SIZEOF(type) (char *)(&type+1)-(char*)(&type)
 
 // Bit-fields
 typedef struct size
@@ -17,7 +19,7 @@ typedef struct size
 /* **************************************************************************************************
  * signOfNumber
  ************************************************************************************************/
-void signOfNumber(int v)
+void BitsClass::signOfNumber(int v)
 {
     int sign = v >> (sizeof(int) * 8 - 1);
 }
@@ -27,7 +29,7 @@ void signOfNumber(int v)
  * ex. 31 = 11111 -> return 5
  *      8 = 1000 -> return 1
  ************************************************************************************************/
-int noOfSetBits(int n)
+int BitsClass::noOfSetBits(int n)
 {
     int count =0;
     while (n)
@@ -45,7 +47,7 @@ int noOfSetBits(int n)
    	   input: B = 20 = 00010100
    	   -> output = 4
 *************************************************************************************************/
-int FlippedCount(int a, int b)
+int BitsClass::FlippedCount(int a, int b)
 {
     return noOfSetBits(a^b);
 }
@@ -55,7 +57,7 @@ int FlippedCount(int a, int b)
    ex. input: 25 = 11001 -> output 100110
    	   input: 0x10101010 -> output 0x01010101
 *************************************************************************************************/
-uint32_t swapEvenOdd(uint32_t num)
+uint32_t BitsClass::swapEvenOdd(uint32_t num)
 {
     uint32_t even = num & 0xAAAAAAAA;
     uint32_t odd = num & 0x55555555;
@@ -68,7 +70,7 @@ uint32_t swapEvenOdd(uint32_t num)
 * add
  * Add two integers without + - operator
 *************************************************************************************************/
-int add(int a, int b)
+int BitsClass::add(int a, int b)
 {
     int sum = 0;
     while (b != 0)
@@ -83,26 +85,25 @@ int add(int a, int b)
 /* **************************************************************************************************
  * reverseBits
  ************************************************************************************************/
-uint32_t reverseBits()
+uint32_t BitsClass::reverseBits(uint32_t num)
 {
-    unsigned int v = 7;         // input bits to be reversed
-    unsigned int r = v;         // r will be reversed bits of v; first get LSB of v
-    int s = sizeof(v) * 8 - 1;  // extra shift needed at end
+    uint32_t revNum = num;              // revNum will be reversed bits of num
+    uint32_t s = sizeof(num) * 8 - 1;   // extra shift needed at end
 
-    for (v >>= 1 ; v ; v >>= 1)
+    for (num >>= 1 ; num ; num >>= 1)
     {
-        r <<= 1;
-        r |= v & 0x1;
+        revNum <<= 1;
+        revNum |= num & 0x1;
         s--;
     }
-    r <<= s;                    // shift when v's highest bits are zero
-    return r;
+    revNum <<= s;                    // shift when v's highest bits are zero
+    return revNum;
 }
 
 /* **************************************************************************************************
 * primeNumbers
 *************************************************************************************************/
-void primeNumbers(int n)
+void BitsClass::primeNumbers(int n)
 {
     bool arr[n/2] ={};
     memset(arr, false, sizeof(arr));
@@ -132,7 +133,7 @@ void primeNumbers(int n)
 /* **************************************************************************************************
  * bitsMain
  ************************************************************************************************/
-void bitsMain()
+void BitsClass::bitsMain()
 {
     std::cout << "Hello from bitsMain" << std::endl;
     primeNumbers(30);

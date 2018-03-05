@@ -1,27 +1,24 @@
-//
-// Created by ankit on 10/14/17.
-//
+/* **************************************************************************************
+*   @file     		    graph.cpp
+*   @brief              This is main source file for Graph examples in C++.
+*   @version            Revision: 1.00
+*   @date               10/14/17.
+****************************************************************************************/
 
-#include <list>
-#include <vector>
+
+#include "graph.h"
 #include <queue>
-#include <stack>
-#include "common.h"
+using namespace std;
 
-
-
-void Graph::addEdge(int v, int w) {
-    adj[v].push_back(w);
-}
-
-void Graph::BFS(int s)
+#if 0
+void GraphClass::BFS(GraphNode* root)
 {
-    vector<bool> visited(V,false);
+    vector<GraphNode*> visited(V,false);
 
-    visited[s] = true;
-
-    list<int> queue;
-    queue.push_back(s);
+    //visited[s] = true;
+    queue<GraphNode> a;
+    queue <GraphNode*> visit;
+    visit.push_back(s);
 
     while(!queue.empty())
     {
@@ -40,7 +37,7 @@ void Graph::BFS(int s)
     }
 }
 
-bool Graph::DFSUtilCycle(int s, std::vector<bool>& visited, std::vector<bool>& stackVisited)
+bool GraphClass::DFSUtilCycle(int s, std::vector<bool>& visited, std::vector<bool>& stackVisited)
 {
     if(visited[s] == false)
     {
@@ -62,6 +59,7 @@ bool Graph::DFSUtilCycle(int s, std::vector<bool>& visited, std::vector<bool>& s
 
     return stackVisited[s] = false;
 }
+
 // This algorithm can be used to solve dependency problems.
 // Course dependency, package install dependency
 // For ex.
@@ -71,14 +69,14 @@ bool Graph::DFSUtilCycle(int s, std::vector<bool>& visited, std::vector<bool>& s
 //          D depends on C
 //          D depends on E
 // This type problem can be solved using DFS and finding cycle
-bool Graph::DFSCycle(int s)
+bool GraphClass::DFSCycle(int s)
 {
     std::vector<bool> visited(V,false);
     std::vector<bool> stackVisited(V,false);
 
-    for(int i = 0 ; i < V ; i++)
+    for (int i = 0 ; i < V ; i++)
     {
-        if(DFSUtilCycle(i, visited, stackVisited))
+        if (DFSUtilCycle(i, visited, stackVisited))
         {
             return true;
         }
@@ -87,7 +85,7 @@ bool Graph::DFSCycle(int s)
     return false;
 }
 
-void Graph::DFSUtil(int s, vector<bool> visited)
+void GraphClass::DFSUtil(int s, vector<bool> visited)
 {
     visited[s] = true;
     cout << s << ",";
@@ -101,13 +99,13 @@ void Graph::DFSUtil(int s, vector<bool> visited)
     }
 }
 
-void Graph::DFS(int s)
+void GraphClass::DFS(GraphNode* root)
 {
     vector<bool> visited(V,false);
     DFSUtil(s, visited);
 }
 
-void printGraph(Graph *graph)
+void printGraph(GraphNode *root)
 {
     for(int i = 0 ; i< graph->V ; i++)
     {
@@ -122,7 +120,7 @@ void printGraph(Graph *graph)
 }
 
 // A recursive function used by topologicalSort
-void Graph::topologicalSortUtil(int v, bool visited[], std::stack<int> &Stack)
+void GraphClass::topologicalSortUtil(int v, bool visited[], std::stack<int> &Stack)
 {
     // Mark the current node as visited.
     visited[v] = true;
@@ -142,7 +140,7 @@ void Graph::topologicalSortUtil(int v, bool visited[], std::stack<int> &Stack)
 
 // The function to do Topological Sort. It uses recursive
 // topologicalSortUtil()
-void Graph::topologicalSort()
+void GraphClass::topologicalSort()
 {
     stack<int> Stack;
 
@@ -165,11 +163,70 @@ void Graph::topologicalSort()
     }
 }
 
-void graphMain()
+
+
+GraphNode* GraphClass::cloneGraphBFS(GraphNode *node)
+{
+    if(node == NULL)
+    {
+        return node;
+    }
+    else
+    {
+        std::unordered_map<GraphNode*,GraphNode*> graphMap;
+        graphMap[node] = new GraphNode(node->value);
+        std::queue<GraphNode*> visited;
+        visited.push(node);
+
+        while (!visited.empty())
+        {
+            GraphNode* cur = visited.front();
+            visited.pop();
+
+            for (auto it = cur->neighbors.begin() ; it != cur->neighbors.end() ; ++it )
+            {
+                if (graphMap.find(*it) == graphMap.end())
+                {
+                    graphMap[*it] = new GraphNode((*it)->value);
+                    visited.push(*it);
+                }
+                graphMap[cur]->neighbors.push_back(graphMap[*it]);
+            }
+        }
+        return graphMap[node];
+    }
+}
+
+GraphNode* GraphClass::cloneGraphDFSUtil(GraphNode *node, unordered_map<GraphNode*,GraphNode*>& graphMap)
+{
+    if(node == NULL)
+    {
+        return node;
+    }
+
+    graphMap[node] = new GraphNode(node->value);
+
+    if (graphMap.find(node) == graphMap.end())
+    {
+        graphMap[node] = new GraphNode(node->value);
+
+        for (auto it = node->neighbors.begin() ; it != node->neighbors.end() ; ++it )
+        {
+            graphMap[node]->neighbors.push_back(graphMap[*it]);
+        }
+    }
+    return graphMap[node];
+}
+GraphNode* GraphClass::cloneGraphDFS(GraphNode *node)
+{
+    std::unordered_map<GraphNode*,GraphNode*> graphMap;
+    cloneGraphDFSUtil(node, graphMap);
+}
+void GraphClass::graphMain()
 {
     std::cout << "Hello from graphMain" << std::endl;
 
-    Graph *g1 = new Graph(6);
+    GraphNode *g1 = new GraphNode(6);
 
     g1->addEdge(5, 2);
     g1->addEdge(5, 0);
@@ -184,3 +241,4 @@ void graphMain()
     printGraph(g1);
     //g1->topologicalSort();
 }
+#endif

@@ -1,40 +1,18 @@
-/*
- * sorting.cpp
- *
- *  Created on: Jan 30, 2017
- *      Author: ankit
- */
+/* **************************************************************************************
+*   @file     		    sort.cpp
+*   @brief              This source file contains all sorting algorithms in C/C++.
+*   @version            Revision: 1.00
+*   @date               01/30/17.
+*   @author             ankit
+****************************************************************************************/
 
 #include "common.h"
-
-void swap(int array[], int swap1, int swap2)
-{
-    int temp = array[swap2];
-    array[swap2] = array[swap1];
-    array[swap1] = temp;
-}
-
-void printList(int arr[], int size)
-{
-    for(int k = 0; k < size ; k++)
-    {
-        cout << arr[k] << ",";
-    }
-    cout << endl;
-}
-
-
-void swap(int& swap1, int& swap2)
-{
-    int temp = 0;
-    temp = swap2;
-    swap2 = swap1;
-    swap1 = temp;
-}
+#include "sort.h"
+#include "utility.h"
 
 // To heapify a subtree rooted with node i which is
 // an index in arr[]. n is size of heap
-void heapify(int arr[], int n, int i)
+void SortingClass::heapify(int arr[], int n, int i)
 {
     int largest = i;  // Initialize largest as root
     int l = 2*i + 1;  // left = 2*i + 1
@@ -73,7 +51,7 @@ void heapify(int arr[], int n, int i)
 * Space Complexity 	| 	Worst Case  	: O(1)		|
 * ---------------------------------------------------
 **************************************************************************************************/
-bool heapSort(int array[], int len)
+bool SortingClass::heapSort(int array[], int len)
 {
     // Build heap (rearrange array)
     for (int i=len/2-1; i>=0; i--)
@@ -91,7 +69,7 @@ bool heapSort(int array[], int len)
 }
 
 
-bool merge(int arr[], int start, int mid, int end)
+bool SortingClass::merge(int arr[], int start, int mid, int end)
 {
     int n1 = mid-start+1;
     int n2 = end-mid;
@@ -161,7 +139,7 @@ bool merge(int arr[], int start, int mid, int end)
 * Useful in external sorting(Very large data in disk and low RAM)
 * Stable algorithm (For same key value maintains order)
 **************************************************************************************************/
-bool mergeSort(int array[], int start, int end)
+bool SortingClass::mergeSort(int array[], int start, int end)
 {
     int midPoint = 0;
 
@@ -190,7 +168,7 @@ bool mergeSort(int array[], int start, int end)
 *  Quick Sort is also a cache friendly algorithm as it has good locality of reference in arrays.
  *  Not stable algorithm
 **************************************************************************************************/
-int partition(int array[], int low, int high)
+int SortingClass::partition(int array[], int low, int high)
 {
     int pivot = array[high];
     int lowIndex = low;
@@ -210,7 +188,7 @@ int partition(int array[], int low, int high)
     return lowIndex;
 }
 
-void quickSort(int array[], int low, int high)
+void SortingClass::quickSort(int array[], int low, int high)
 {
     int pivot = 0;
 
@@ -284,7 +262,7 @@ int mThLargest(int arr[], int low, int high, int m)
 * Space Complexity 	| 	Worst Case  	: O(1)	|
 * -----------------------------------------------
 **************************************************************************************************/
-bool bubbleSort(int array[], int len)
+bool SortingClass::bubbleSort(int array[], int len)
 {
     int  i=0,j=0;
     int temp =0;
@@ -330,7 +308,7 @@ bool bubbleSort(int array[], int len)
 * Space Complexity 	| 	Worst Case  	: O(1)	|
 * -----------------------------------------------
 **************************************************************************************************/
-bool insertionSort(int array[], int len)
+bool SortingClass::insertionSort(int array[], int len)
 {
     int key = 0;
     int index = 0;
@@ -369,7 +347,7 @@ bool insertionSort(int array[], int len)
 * Space Complexity 	| 	Worst Case  	: O(1)	|
 * -----------------------------------------------
 **************************************************************************************************/
-void selectionSort(int arr[],int len)
+void SortingClass::selectionSort(int arr[],int len)
 {
     int i=0,j=0,index=0,temp=0;
     bool foundLower = false;
@@ -406,7 +384,7 @@ void selectionSort(int arr[],int len)
 /* *************************************************************************************************
 * Main - Main Entry
 * ************************************************************************************************/
-int sortingMain()
+int SortingClass::sortingMain()
 {
     cout << "Hello from sortingMain" << endl;
     int arr[] = {5, 4, 3, 2, 1, 11, 10, 9, 8, 7, 6};

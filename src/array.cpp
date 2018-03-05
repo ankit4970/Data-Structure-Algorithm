@@ -1,12 +1,11 @@
 //
 // Created by ankit on 11/11/2017.
 //
-#include "common.h"
-#include <vector>
-#include <map>
+
+#include "array.h"
 
 // Find the maximum value subarray
-int maxSumSubArray()
+int ArrayClass::maxSumSubArray()
 {
     vector<int> nums = {-2,1,-3,4,-1,2,1,-5,4};
     int sum = nums[0], res = nums[0];
@@ -18,8 +17,9 @@ int maxSumSubArray()
     }
     return res;
 }
+
 // Find the subarray whose sum is equal to the given sum
-int subarraySum()
+int ArrayClass::subarraySum()
 {
     vector<int> arr = {1, 2, 3, 7, 9};
     int target = 5;
@@ -45,7 +45,7 @@ int subarraySum()
             break;
         }
     }
-    if(flag)
+    if (flag)
     {
         cout << "Start is : " << start << endl;
         cout << "End is : " << end << endl;
@@ -68,7 +68,7 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 */
 
-vector<int> twoSum(vector<int>& nums, int target)
+vector<int> ArrayClass::twoSum(vector<int>& nums, int target)
 {
     vector<int> temp;
     map<int, int> Map;
@@ -94,7 +94,7 @@ vector<int> twoSum(vector<int>& nums, int target)
     return temp;
 }
 
-void arrayMain()
+void ArrayClass::arrayMain()
 {
     cout << maxSumSubArray() << endl;
     subarraySum();

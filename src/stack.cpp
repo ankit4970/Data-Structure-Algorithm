@@ -1,9 +1,11 @@
 //
 // Created by ankit on 10/7/2017.
 //
-#include "common.h"
+
+#include "mystack.h"
 #include <stack>
 #define MAX 1000
+
 class myStack
 {
     public:
@@ -50,8 +52,8 @@ bool myStack::push(int data) {
 class MinStack
 {
     private:
-        std::stack<int> s1;
-        std::stack<int> s2;
+        stack<int> s1;
+        stack<int> s2;
     public:
         void push(int x)
         {

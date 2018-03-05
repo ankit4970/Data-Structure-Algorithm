@@ -1,13 +1,18 @@
-//
-// Created by ankit on 9/4/2017.
-//
-#include <time.h>
-#include <sys/time.h>
-#include "common.h"
+/* **************************************************************************************
+*   @file     		    linkedlist.cpp
+*   @brief              This source file contains linkedlist problems in C/C++.
+*   @version            Revision: 1.00
+*   @date               09/04/17
+*   @author             ankit
+****************************************************************************************/
 
-/****************************************************************************
+#include "linkedlist.h"
+#include <stack>
+#include <climits>
+
+/* **************************************************************************************
  * printList
- ***************************************************************************/
+ ***************************************************************************************/
 void LinkedList::printList(ListNode *head )
 {
     while(head != NULL)
@@ -18,9 +23,9 @@ void LinkedList::printList(ListNode *head )
     cout << endl;
 }
 
-/* ******************************************************************************
+/* **************************************************************************************
  * reverseList -  reverse a given linkedlist
- ******************************************************************************/
+ ***************************************************************************************/
 void LinkedList::reverseList(ListNode** head)
 {
     ListNode *pre = nullptr;
@@ -37,9 +42,9 @@ void LinkedList::reverseList(ListNode** head)
     *head = pre;
 }
 
-/* ******************************************************************************
+/* **************************************************************************************
  * deleteFromList -  delete a given number from linkedlist
- ******************************************************************************/
+ ***************************************************************************************/
 void LinkedList::deleteFromList(ListNode **head, int dataToDelete)
 {
     ListNode *cur = *head;
@@ -74,9 +79,9 @@ void LinkedList::deleteFromList(ListNode **head, int dataToDelete)
     cout << "ListNode not found" << endl;
 }
 
-/* ******************************************************************************
+/* **************************************************************************************
  * appendToList -  append given number to the given list
- ******************************************************************************/
+ ***************************************************************************************/
 void LinkedList::appendToList(ListNode **head, int data)
 {
     ListNode *newNode = new ListNode(data);
@@ -97,9 +102,9 @@ void LinkedList::appendToList(ListNode **head, int data)
     temp->next = newNode;
 }
 
-/* ******************************************************************************
+/* **************************************************************************************
  * addTwoNumbers -  add two numbers given as digits in linkedlist
- ******************************************************************************/
+ ***************************************************************************************/
 ListNode* LinkedList::addTwoNumbers(ListNode* l1, ListNode* l2)
 {
     ListNode preHead(0), *p = &preHead;
@@ -192,11 +197,11 @@ ListNode* LinkedList::detectAndReturnCycleNode(ListNode *head)
     ListNode *slow = head;
     ListNode *fast = head;
     bool isCycle = false;
-    if(head == NULL)
+    if (head == NULL)
     {
         return NULL;
     }
-    while(fast && fast->next)
+    while (fast && fast->next)
     {
         fast = fast->next->next;
         slow = slow->next;
@@ -207,7 +212,7 @@ ListNode* LinkedList::detectAndReturnCycleNode(ListNode *head)
         }
     }
 
-    if(isCycle)
+    if (isCycle)
     {
         ListNode *temp = head;
         while(temp)
@@ -414,9 +419,6 @@ void LinkedList::rotateCounterClock(ListNode **head_ref, int k)
  ******************************************************************************/
 void LinkedList::segEvenOdd(ListNode* head)
 {
-    struct timeval  tv1, tv2;
-    gettimeofday(&tv1, NULL);
-
     ListNode* even = head;
     ListNode* cur = head;
 
@@ -438,11 +440,6 @@ void LinkedList::segEvenOdd(ListNode* head)
         }
         cur = cur->next;
     }
-
-    gettimeofday(&tv2, NULL);
-    printf ("Total time = %f seconds\n",
-            (double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
-            (double) (tv2.tv_sec - tv1.tv_sec));
 }
 
 ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
@@ -519,7 +516,45 @@ ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
     }
     return ret;
 }
+ListNode* LinkedList::deleteFromListGreater(ListNode **head, int dataToDelete)
+{
+    ListNode *cur = *head;
+    ListNode *pre = nullptr;
 
+    if(*head == nullptr)
+    {
+        cout << "Empty list" << endl;
+        return *head;
+    }
+
+    while(cur != nullptr)
+    {
+        if(cur->val > dataToDelete)
+        {
+            if(cur == *head)
+            {
+                *head = cur->next;
+                delete(cur);
+                cur = *head;
+                continue;
+            }
+            else
+            {
+                if (pre)
+                    pre->next = cur->next;
+                delete (cur);
+                cur = pre->next;
+            }
+        }
+        else
+        {
+            pre = cur;
+            cur = cur->next;
+        }
+    }
+
+    return *head;
+}
 
 /* ******************************************************************************
  * linkedListMain
@@ -573,17 +608,22 @@ void LinkedList::linkedListMain()
     //printList(sum);
 
     ListNode* l1 = nullptr;
-    appendToList(&l1, 7);
+    appendToList(&l1, 5);
+    appendToList(&l1, 1);
     appendToList(&l1, 2);
+    appendToList(&l1, 3);
     appendToList(&l1, 4);
+    appendToList(&l1, 5);
     appendToList(&l1, 3);
 
-    ListNode* l2 = nullptr;
-    appendToList(&l2, 5);
-    appendToList(&l2, 6);
-    appendToList(&l2, 4);
+//    ListNode* l2 = nullptr;
+//    appendToList(&l2, 5);
+//    appendToList(&l2, 6);
+//    appendToList(&l2, 4);
+//
+//    addTwoNumbers2(l1,l2);
 
-    addTwoNumbers2(l1,l2);
-
-
+    deleteFromListGreater(&l1,4);
+    cout << "Printing" << endl;
+    printList(l1);
 }

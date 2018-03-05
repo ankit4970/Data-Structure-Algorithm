@@ -1,19 +1,18 @@
-/*
- * algorithm.cpp
- *
- *  Created on: Apr 4, 2017
- *      Author: ankit
- */
+/* **************************************************************************************
+*   @file     		    algorithm.cpp
+*   @brief              This source file contains backtracking problems in C/C++.
+*   @version            Revision: 1.00
+*   @date               04/04/18
+*   @author             ankit
+****************************************************************************************/
 
 #include "common.h"
-#include <climits>
-#include <cstring>
-#include <vector>
 #include <map>
 #include <cmath>
 #include <set>
+#include <cstring>
 
-using namespace std;
+#include "algorithm.h"
 
 // Dimentions of paint screen
 #define     M   4
@@ -23,7 +22,7 @@ using namespace std;
 #define max(a,b) (a > b ? a : b)
 #define min(a,b) (a < b ? a : b)
 
-
+#if 0
 /******************************************************************************
  * maxSubArraySum -  find the subarray with maximum sum
  *****************************************************************************/
@@ -240,55 +239,10 @@ int maxDistanceArray()
     cout << res << endl ;
 }
 
-int longestIncreasingSubArray(vector<int>& nums)
-{
-    vector<int> table(nums.size(),1);
-
-    for(int i = 0 ; i < nums.size() ; i++)
-    {
-        for(int j = 0 ; j < i ; j++)
-        {
-            if(nums[i] > nums[j] && (table[i] < table[j] + 1))
-            {
-                table[i] = table[j] + 1;
-            }
-        }
-    }
-
-    int max = INT_MIN;
-    for(int i = 0 ; i < table.size() ; i++)
-    {
-        cout << table[i] << endl;
-        if(max < table[i])
-        {
-            max = table[i];
-        }
-    }
-
-    return max;
-}
 
 
 
-// Return minimum number of coins required to make amount
-int coinChange(vector<int>& coins, int amount) {
-    int max = amount+1;
-    vector<int> table(amount+1,max);
-    table[0] = 0;
 
-    for(int i = 1 ; i <= amount ; i++)
-    {
-        for(int j = 0 ; j < coins.size() ; j++)
-        {
-            if(coins[j] <= i)
-            {
-                table[i] = min(table[i] , table[i-coins[j]] + 1);
-            }
-        }
-    }
-
-    return table[amount];
-}
 
 void printSolutionMaze(int sol[N][N])
 {
@@ -583,3 +537,4 @@ void algoMain()
     }
 }
 
+#endif

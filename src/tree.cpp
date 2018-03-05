@@ -6,8 +6,10 @@
  ***************************************************************************************/
 
 #include "common.h"
+#include "tree.h"
 #include <queue>
 #include <cstring>
+#include <climits>
 
 void TreeClass::preOrder(TreeNode *root)
 {
@@ -42,7 +44,8 @@ void TreeClass::postOrder(TreeNode *root)
 void TreeClass::levelOrder(TreeNode *root)
 {
     TreeNode* temp = nullptr;
-    queue<TreeNode*> tempQueue;
+
+    std::queue<TreeNode*> tempQueue;
     tempQueue.push(root);
 
     while (!tempQueue.empty())
@@ -178,6 +181,43 @@ TreeNode* TreeClass::deSerializeBST(string data)
     return deSerializeBSTHelper(data, pos, INT_MIN, INT_MAX);
 }
 
+TreeNode* minElement(TreeNode* node)
+{
+    while (node->left)
+    {
+        node = node->left;
+    }
+
+    return node;
+}
+
+TreeNode* inOrderSuccessorBST(TreeNode* root, TreeNode* node)
+{
+    TreeNode* successor = nullptr;
+
+    if (node->right != NULL)
+    {
+        return minElement(node->right); // Leftmost node in right subtree
+    }
+
+    while (root)
+    {
+        if (root->val > node->val)
+        {
+            successor = root;
+            root = root->left;
+        }
+        else if (root->val < node->val)
+        {
+            root = root->right;
+        }
+        else
+            break;
+    }
+
+    return successor;
+}
+
 void TreeClass::treeMain()
 {
     TreeNode *root = new TreeNode(1);
@@ -213,4 +253,6 @@ void TreeClass::treeMain()
     TreeNode* newRootBST = deSerializeBST(binarySearchtree);
     inOrder(newRootBST); cout << endl;
 
+    TreeNode* successor = inOrderSuccessorBST(rootBST, rootBST->right->right->left);
+    cout << "In order successor of " <<  rootBST->right->right->left->val << "is " << successor->val;
 }
