@@ -1,34 +1,34 @@
 /* **************************************************************************************
-*   @file     		    string.cpp
-*   @brief              This source file contains string problems in C/C++.
-*   @version            Revision: 1.00
-*   @date               09/20/17
-*   @author             ankit
-****************************************************************************************/
+ * string.cpp
+ *
+ *  Created by ankit on 9/20/2017
+ *      Author: ankit
+ ***************************************************************************************/
 
 
-
-#include <limits.h>
-#include <cstring>
 #include "mystring.h"
 
-using namespace std;
-#if 0
-bool isSubsequence(char* s, char* t)
+/* **************************************************************************************
+ * Check if target string is subsequence of source string
+   ex. input : source : aabcbccdddeee
+               target : abcde
+      output : true
+****************************************************************************************/
+bool stringClass::isSubsequence(char* source, char* target)
 {
-    while (*t)
+    while (*target)
     {
-        s = s + (*s == *t++);
+        source = source + (*source == *target++);
     }
-    return !*s;
+    return !*source;
 }
-#endif
-/* ************************************************************************************************
+
+/* **************************************************************************************
  * Reverses a given string
    ex. input : string
        output : gnirts
- ************************************************************************************************/
-void StringClass::reverse(char *begin, char *end)
+****************************************************************************************/
+void stringClass::reverseString(char *begin, char *end)
 {
     char temp;
     while (begin < end)
@@ -39,41 +39,41 @@ void StringClass::reverse(char *begin, char *end)
     }
 }
 
-/* ************************************************************************************************
- * Reverse the words in a sentence
-   ex. input : this is a string
+/* **************************************************************************************
+ * Reverses words in a given string
+   ex. input  : this is a string
        output : string a is this
- ************************************************************************************************/
-void StringClass::stringReverseWords(char *string)
+ ***************************************************************************************/
+void stringClass::stringReverseWords(char *string)
 {
     char *begin = string;
-    char *temp = string;
+    char *end = string;
 
     if (string)
     {
-        while (*temp)
+        while (*end)
         {
-            temp++;
-            if (*temp == '\0')
+            end++;
+            if (*end == '\0')
             {
-                reverse(begin, temp-1);
+                reverseString(begin, end-1);
             }
-            else if (*temp == ' ')
+            else if (*end == ' ')
             {
-                reverse(begin, temp-1);
-                begin = temp+1;
+                reverseString(begin, end-1);
+                begin = end+1;
             }
         }
-        reverse(string, temp-1);
+        reverseString(string, end-1);
     }
 }
 
-/* ************************************************************************************************
+/* **************************************************************************************
  * Check if a string is palindrome
    i.e. input : aaddddaa output : is palindrome
        input : abcded   output : is not palindrome
- ************************************************************************************************/
-void StringClass::isPalindrome(char str[])
+ ***************************************************************************************/
+void stringClass::isPalindrome(char str[])
 {
     // Start from leftmost and rightmost corners of str
     int l = 0;
@@ -92,11 +92,12 @@ void StringClass::isPalindrome(char str[])
 }
 
 /* ************************************************************************************************
- * Check if a string is palindrome
+ * maxOccuringcharacter
+ *      Returns a character with maximum occurence
    i.e. input : aaddddaa output : is palindrome
        input : abcded   output : is not palindrome
  ************************************************************************************************/
-void StringClass::maxOccuringcharacter(char *str)
+char stringClass::maxOccuringcharacter(char *str)
 {
     int map[256]= {};
     int maximum = 0;
@@ -111,14 +112,15 @@ void StringClass::maxOccuringcharacter(char *str)
             result = str[i];
         }
     }
-
-    cout << "Maximum occuring character in \"" << str << "\" is : " << result << ' ' <<maximum << " times" << endl;
+    cout << "Maximum occuring character in \"" <<str<<"\" is : "<<result<<' ' <<maximum<<" times"<<endl;
+    return result;
 }
 
-/* ************************************************************************************************
- * removeSpaces Check if a string is palindrome
- ************************************************************************************************/
-void StringClass::removeSpaces(char *str)
+/* **************************************************************************************
+ * removeSpaces
+ *      Remove spaces from a given string
+ ***************************************************************************************/
+void stringClass::removeSpaces(char *str)
 {
     char *cur = str;
     char *start = str;
@@ -135,9 +137,11 @@ void StringClass::removeSpaces(char *str)
 
 
 
-// abcdea dsfsdf
-/*
-void removeDuplicates(char* str)
+/* **************************************************************************************
+ * removeSpaces
+ *      Remove spaces from a given string
+ ***************************************************************************************/
+void stringClass::removeDuplicates(char* str)
 {
     unsigned int readIndex = 0;
     unsigned int writeIndex = 0;
@@ -145,7 +149,7 @@ void removeDuplicates(char* str)
     char Map[256] = {};
     int count = 0;
 
-    while (stri[readIndex] != NULL)
+    while (stri[readIndex] != '\0')
     {
         if (stri[readIndex] == ' ')
         {
@@ -165,32 +169,33 @@ void removeDuplicates(char* str)
         }
     }
     stri[writeIndex] = '\0';
-}*/
+}
+
 /* ************************************************************************************************
  * Searching for Patterns (Naive solution)
  *      Searching all occurrences of pattern(string) in target(string)
  *      Similar to strstr
  *************************************************************************************************/
-bool StringClass::searchPattern(char* target, char* pattern)
+bool stringClass::searchPattern(char* target, char* pattern)
 {
     int M = strlen(target);
     int N = strlen(pattern);
     int j = 0, i = 0;
 
-    if(N > M)
+    if (N > M)
     {
         return false;
     }
-    for(i = 0 ; i <= M - N ; i++ )
+    for (i = 0 ; i <= M - N ; ++i )
     {
-        for(j = 0 ; j < N ; j++)
+        for (j = 0 ; j < N ; ++j)
         {
-            if(target[j+i] != pattern[j])
+            if (target[j+i] != pattern[j])
             {
                 break;
             }
         }
-        if(j == N)
+        if (j == N)
         {
             cout << "Pattern matched at index : " << i << " to " << i+j-1 << endl;
             break;
@@ -200,9 +205,9 @@ bool StringClass::searchPattern(char* target, char* pattern)
 
 /* ************************************************************************************************
  * Optimized
- * assumption : pattern has all unique characters
+ *      assumption : pattern has all unique characters
  ************************************************************************************************/
-bool StringClass::searchPattern1(char* target, char* pattern)
+bool stringClass::searchPattern1(char* target, char* pattern)
 {
     int m = strlen(target);
     int n = strlen(pattern);
@@ -212,21 +217,21 @@ bool StringClass::searchPattern1(char* target, char* pattern)
         return false;
     }
 
-    while(i<=m)
+    while (i <= m)
     {
-        for(j = 0 ; j < n ; j++)
+        for (j = 0 ; j < n ; j++)
         {
-            if(target[j+i] != pattern[j])
+            if (target[j+i] != pattern[j])
             {
                 break;
             }
         }
-        if(j == n)
+        if (j == n)
         {
             cout << "Pattern matched at index : " << i << " to " << i+j-1 << endl;
             i = i + n;
         }
-        else if(j == 0)
+        else if (j == 0)
         {
             i += 1;
         }
@@ -238,15 +243,17 @@ bool StringClass::searchPattern1(char* target, char* pattern)
 }
 
 /* ************************************************************************************************
- * Compress a string
+ * compressString
+ *      Compress a string
  ************************************************************************************************/
-int StringClass::compress(vector<char>& chars)
+int stringClass::compressString(vector<char>& chars)
 {
-    int curIndex = 0, writeIndex = 0;
+    int writeIndex = 0;
     int readIndex = 0;
-    for (int i=0 ; i < chars.size() ; ++i )
+
+    for (int i = 0 ; i < chars.size() ; ++i )
     {
-        if (i+1 == chars.size() || chars[i+1] != chars[i] )
+        if (i+1 == chars.size() || chars[i] != chars[i+1])
         {
             chars[writeIndex++] = chars[readIndex];
             if (i > readIndex)
@@ -264,8 +271,13 @@ int StringClass::compress(vector<char>& chars)
 }
 
 
-
-char* StringClass::compress(char* chars)
+/* **************************************************************************************
+ * subSequenceTag
+ *      Pre-Order traversal of Binary Tree
+ *      ex:  //{"in","the","spain"};
+ *      {"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
+ ***************************************************************************************/
+char* stringClass::compress(char* chars)
 {
     int writeIndex = 0;
     int readIndex = 0;
@@ -275,7 +287,7 @@ char* StringClass::compress(char* chars)
 
     for (int i=0 ; i < length-1 ; ++i )
     {
-        if (i+1 == length-1 || chars[i+1] != chars[i] )
+        if (i+1 == length || chars[i+1] != chars[i] )
         {
             newString[writeIndex++] = chars[readIndex];
             string s = to_string(i - readIndex + 1);
@@ -290,43 +302,73 @@ char* StringClass::compress(char* chars)
     newString[writeIndex] = '\0';
     return newString;
 }
-#if 0 // n error
+
 /* ************************************************************************************************
  * longestPalindromeSubsequence
  *      Returns the length of the longest palindromic subsequence in string
  *************************************************************************************************/
-int StringClass::longestPalindromeSubsequence(std::string str)
+uint32_t stringClass::longestPalindromeSubsequence(string str)
 {
     vector<vector<int>> table(str.length()+1,vector<int>(str.length(),0));
+    int n = str.length();
 
     // Strings of length 1 are palindrome of lentgh 1
-    for (int i = 0; i < str.length(); ++i)
+    for (int i = 0; i < n ; ++i)
     {
         table[i][i] = 1;
     }
 
-    for (int length = 2 ; length <= str.length() ; ++length)
+    for (int length = 2 ; length <= n ; ++length)
     {
-        for (int i = 0 ; i < n-cl+1; ++i)
+        for (int i = 0 ; i < n-length+1; ++i)
         {
-            j = i+cl-1;
-            if (str[i] == str[j] && cl == 2)
-                L[i][j] = 2;
+            int j = i+length-1;
+            if (str[i] == str[j] && length == 2)
+            {
+                table[i][j] = 2;
+            }
             else if (str[i] == str[j])
-                L[i][j] = L[i+1][j-1] + 2;
+            {
+                table[i][j] = table[i + 1][j - 1] + 2;
+            }
             else
-                L[i][j] = max(L[i][j-1], L[i+1][j]);
+            {
+                table[i][j] = max(table[i][j - 1], table[i + 1][j]);
+            }
         }
     }
-    cout << "lps is " << L[0][n-1] << endl;
-    return L[0][n-1];
+    cout << "lps is " << table[0][n-1] << endl;
+    return table[0][n-1];
 }
-#endif
+
+unordered_map<string, string> Map;
 /* ************************************************************************************************
  * longestPalindromeSubstring
  *      Returns the length of the longest palindromic substring
  *************************************************************************************************/
-string StringClass::longestPalindromeSubstring(std::string s)
+string stringClass::mostRecentAnagram(std::string token)
+{
+    string temp = token;
+    sort(token.begin(), token.end());
+    string res;
+    if(Map.find(token) != Map.end())
+    {
+        res = Map[token];
+        Map[token] = temp;
+    }
+    else
+    {
+        Map[token] = temp;
+        res = temp;
+    }
+    return res;
+}
+
+/* ************************************************************************************************
+ * longestPalindromeSubstring
+ *      Returns the length of the longest palindromic substring
+ *************************************************************************************************/
+string stringClass::longestPalindromeSubstring(std::string s)
 {
     if (s.empty())
         return "";
@@ -361,9 +403,26 @@ string StringClass::longestPalindromeSubstring(std::string s)
     return s.substr(min_start, max_len);
 }
 
-//{"in","the","spain"};
-//{"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
-vector<int> StringClass::subSequenceTag(vector<std::string>& targetList, vector<std::string>& availableTagList)
+
+/* **************************************************************************************
+ * subSequenceTag
+ *      Pre-Order traversal of Binary Tree
+ *      ex:  //{"in","the","spain"};
+ *      {"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
+ ***************************************************************************************/
+void stringClass::wordBreak()
+{
+
+}
+
+/* **************************************************************************************
+ * subSequenceTag
+ *      Pre-Order traversal of Binary Tree
+ *      ex:  //{"in","the","spain"};
+ *      {"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
+ ***************************************************************************************/
+vector<int> stringClass::subSequenceTag(vector<string>& targetList,
+                                        vector<string>& availableTagList)
 {
     map<string,int> MapTarget;
     cout << targetList.size()<<endl;
@@ -417,7 +476,7 @@ vector<int> StringClass::subSequenceTag(vector<std::string>& targetList, vector<
 }
 
 #if 0
-vector<int> StringClass::subSequenceTagNew(vector<std::string>& targetList, vector<std::string>& availableTagList)
+vector<int> stringClass::subSequenceTagNew(vector<std::string>& targetList, vector<std::string>& availableTagList)
 {
     map<string,bool> MapTarget;
     for (auto list : targetList)
@@ -482,7 +541,7 @@ vector<int> StringClass::subSequenceTagNew(vector<std::string>& targetList, vect
 **************************************************************************************************
  * stringMain
  ************************************************************************************************/
-void StringClass::stringMain()
+void stringClass::stringMain()
 {
     cout << "Hello from stringMain" << endl;
     char str[] = "BBBAABACBBAA";
@@ -505,9 +564,14 @@ void StringClass::stringMain()
     //removeDuplicates(stri);
     //cout << stri << endl;
 
-    vector<string> targetList ={"in","the","spain"};
-    vector<string> availableTagList = {"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
-    subSequenceTag(targetList, availableTagList);
+    //vector<string> targetList ={"in","the","spain"};
+    //vector<string> availableTagList = {"the","spain","that","the","rain","in","spain","stays","forecast","in","the"};
+    //subSequenceTag(targetList, availableTagList);
 
+    cout << mostRecentAnagram("abc") << endl;
+    cout << mostRecentAnagram("def") << endl;
+    cout << mostRecentAnagram("ghi") << endl;
+    cout << mostRecentAnagram("jkl") << endl;
+    cout << mostRecentAnagram("cba") << endl;
     return;
 }

@@ -6,9 +6,9 @@
 *   @author             ankit
 ****************************************************************************************/
 
-#include "common.h"
+
 #include "backtracking.h"
-#include <algorithm>
+
 
 void BackTrackingClass::coinChangeCombinations(int amount, vector<int>& coins)
 {

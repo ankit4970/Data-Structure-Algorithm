@@ -20,8 +20,9 @@ set(SOURCE_FILES
         src/graph.cpp
         src/sort.cpp
         src/utility.cpp
-        includes/graph.h
         includes/array.h
+        includes/bits.h
+        includes/graph.h
         includes/backtracking.h
         includes/dynamicprogramming.h
         includes/sort.h
@@ -31,6 +32,7 @@ set(SOURCE_FILES
         includes/matrix.h
         includes/mystack.h
         includes/mystring.h
+        includes/tree.h
         includes/trie.h
         )
 

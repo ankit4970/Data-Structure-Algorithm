@@ -5,7 +5,12 @@
 #ifndef INTERVIEW_BITS_H
 #define INTERVIEW_BITS_H
 
+#include <iostream>
+#include <cstring>
+#include <cmath>
 #include <cstdint>
+
+using namespace std;
 
 class BitsClass{
     int noOfSetBits(int n);

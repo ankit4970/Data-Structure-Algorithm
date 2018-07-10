@@ -5,8 +5,9 @@
 #ifndef INTERVIEW_TREE_H
 #define INTERVIEW_TREE_H
 
-#include "common.h"
-#include "tree.h"
+#include "iostream"
+
+using namespace std;
 
 // A Binary Tree Node
 struct TreeNode
@@ -38,6 +39,13 @@ class TreeClass {
 
     int isBST(TreeNode *node);
     bool isBSTUtil(TreeNode *node, int min, int max);
+
+    TreeNode* kthSmallestNodeBSTUtil(TreeNode* root, int& k);
+    TreeNode* kthSmallestNodeBST(TreeNode* root, int k);
+
+    TreeNode* inOrderSuccessorBST(TreeNode* root, TreeNode* node);
+
+    TreeNode* minElementBST(TreeNode* node);
 
 public:
     void treeMain();

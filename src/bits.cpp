@@ -2,12 +2,11 @@
 // Created by ankit on 9/20/2017.
 //
 
-#include <cstring>
-#include "common.h"
+
 #include "bits.h"
 
-#define ISPOWEROFTWO(n) (n && !(n&(n-1)))   // returns true if given number is power of 2 else false, 0 false
-#define MY_SIZEOF(type) (char *)(&type+1)-(char*)(&type)
+#define ISPOWEROFTWO(n) (n && !(n&(n-1)))               // returns true if given number is power of 2 else false
+#define MY_SIZEOF(type) (char*)(&type+1)-(char*)(&type)
 
 // Bit-fields
 typedef struct size
@@ -66,6 +65,7 @@ uint32_t BitsClass::swapEvenOdd(uint32_t num)
 
     return swapBits;
 }
+
 /* **************************************************************************************************
 * add
  * Add two integers without + - operator
@@ -88,7 +88,7 @@ int BitsClass::add(int a, int b)
 uint32_t BitsClass::reverseBits(uint32_t num)
 {
     uint32_t revNum = num;              // revNum will be reversed bits of num
-    uint32_t s = sizeof(num) * 8 - 1;   // extra shift needed at end
+    uint32_t s = sizeof(num)*8 - 1;   // extra shift needed at end
 
     for (num >>= 1 ; num ; num >>= 1)
     {
@@ -105,24 +105,24 @@ uint32_t BitsClass::reverseBits(uint32_t num)
 *************************************************************************************************/
 void BitsClass::primeNumbers(int n)
 {
-    bool arr[n/2] ={};
+    bool arr[n+1] ={};
     memset(arr, false, sizeof(arr));
 
-    for(int i = 3 ; i*i < n  ; i = i+2 )
+    for (int i=2 ; i*i <=n ; ++i)
     {
-        if(arr[i/2] == false)
+        if (arr[i] == false)
         {
-            for (int j = i*i ; j < n ; j+=i*2)
+            for (int j=i*2 ; j <= n ; j+=i)
             {
-                arr[j/2] = true;
+                arr[j] = true;
             }
         }
     }
-    cout << 2 << " ";
 
-    for (int i = 3; i < n ; i+=2)
+    // Print all prime numbers
+    for (int i = 2; i <= n ; ++i)
     {
-        if (arr[i/2] == false)
+        if (arr[i] == false)
         {
             cout << i << " " ;
         }

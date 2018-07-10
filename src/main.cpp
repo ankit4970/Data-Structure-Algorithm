@@ -7,7 +7,6 @@
 using namespace std;
 
 #include <dynamicprogramming.h>
-#include "common.h"
 #include "matrix.h"
 #include "linkedlist.h"
 #include "mystring.h"
@@ -17,35 +16,36 @@ using namespace std;
 #include "bits.h"
 #include "tree.h"
 #include "backtracking.h"
+#include "mystring.h"
 
 int main()
 {
     cout << "Hello, the World!" << endl;
 
     /*  Linkedlist test */
-    LinkedList linklist;
-    linklist.linkedListMain();
+    //LinkedList linklist;
+    //linklist.linkedListMain();
 
     /*  Linkedlist test */
-    MatrixClass matrix;
-    matrix.matrixMain();
+    //MatrixClass matrix;
+    //matrix.matrixMain();
 
 
     /*  String test */
-    StringClass mystring;
+    stringClass mystring;
     mystring.stringMain();
 
     /*  Sorting test */
-    SortingClass mysort;
-    mysort.sortingMain();
+    //SortingClass mysort;
+    //mysort.sortingMain();
 
     /*  Array test */
-    ArrayClass myarray;
-    myarray.arrayMain();
+    //ArrayClass myarray;
+    //myarray.arrayMain();
 
     /*  Bit manipulation test */
-    BitsClass bits;
-    bits.bitsMain();
+    //BitsClass bits;
+    //bits.bitsMain();
 
     /*  Graph test */
     //GraphClass mygraph;
@@ -55,14 +55,14 @@ int main()
     //MemoryClass memory.
     //memory.memoryMain();
 
-    TreeClass tree;
-    tree.treeMain();
+    //TreeClass tree;
+    //tree.treeMain();
 
-    BackTrackingClass mybackTracking;
-    mybackTracking.backTrackMain();
+    //BackTrackingClass mybackTracking;
+    //mybackTracking.backTrackMain();
 
-    dynamicProgramClass dp;
-    dp.dpMain();
+    //dynamicProgramClass dp;
+    //dp.dpMain();
 
     return 0;
 }

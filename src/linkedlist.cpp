@@ -7,8 +7,7 @@
 ****************************************************************************************/
 
 #include "linkedlist.h"
-#include <stack>
-#include <climits>
+
 
 /* **************************************************************************************
  * printList
@@ -24,7 +23,8 @@ void LinkedList::printList(ListNode *head )
 }
 
 /* **************************************************************************************
- * reverseList -  reverse a given linkedlist
+ * reverseList
+ *      reverse a given linkedlist
  ***************************************************************************************/
 void LinkedList::reverseList(ListNode** head)
 {
@@ -43,7 +43,8 @@ void LinkedList::reverseList(ListNode** head)
 }
 
 /* **************************************************************************************
- * deleteFromList -  delete a given number from linkedlist
+ * deleteFromList
+ *      delete a given number from linkedlist
  ***************************************************************************************/
 void LinkedList::deleteFromList(ListNode **head, int dataToDelete)
 {
@@ -80,12 +81,12 @@ void LinkedList::deleteFromList(ListNode **head, int dataToDelete)
 }
 
 /* **************************************************************************************
- * appendToList -  append given number to the given list
+ * appendToList
+ *      append given number to the given list
  ***************************************************************************************/
 void LinkedList::appendToList(ListNode **head, int data)
 {
     ListNode *newNode = new ListNode(data);
-
     ListNode *temp = *head;
 
     if(*head == nullptr)
@@ -103,7 +104,8 @@ void LinkedList::appendToList(ListNode **head, int data)
 }
 
 /* **************************************************************************************
- * addTwoNumbers -  add two numbers given as digits in linkedlist
+ * addTwoNumbers
+ *      add two numbers given as digits in linkedlist
  ***************************************************************************************/
 ListNode* LinkedList::addTwoNumbers(ListNode* l1, ListNode* l2)
 {
@@ -122,7 +124,8 @@ ListNode* LinkedList::addTwoNumbers(ListNode* l1, ListNode* l2)
 }
 
 /* ******************************************************************************
- * findMiddle -  find middle of the linkedlist
+ * findMiddle
+ *      find middle of the linkedlist
  ******************************************************************************/
 ListNode* LinkedList::findMiddle(ListNode *head)
 {
@@ -142,7 +145,8 @@ ListNode* LinkedList::findMiddle(ListNode *head)
 }
 
 /* ******************************************************************************
- * findMiddleNew -  add two numbers given as digits in linkedlist
+ * findMiddleNew
+ *      add two numbers given as digits in linkedlist
  ******************************************************************************/
 ListNode* LinkedList::findMiddleNew(ListNode *head)
 {
@@ -167,7 +171,8 @@ ListNode* LinkedList::findMiddleNew(ListNode *head)
 }
 
 /* ******************************************************************************
- * findLoop -  find loop in the linkedList
+ * findLoop
+ *      find loop in the linkedList
  ******************************************************************************/
 bool LinkedList::findCycle(ListNode *head)
 {
@@ -235,7 +240,8 @@ ListNode* LinkedList::detectAndReturnCycleNode(ListNode *head)
 }
 
 /* ******************************************************************************
- * mergeTwoSorted -  mergeSorted
+ * mergeTwoSorted
+ *      merge two sorted linkedlist into one sorted linkedlist
  *******************************************************************************/
 ListNode* LinkedList::mergeTwoSorted(ListNode *h1, ListNode *h2)
 {
@@ -257,7 +263,8 @@ ListNode* LinkedList::mergeTwoSorted(ListNode *h1, ListNode *h2)
 }
 
 /* ******************************************************************************
- * insertSorted -  insert Sorted
+ * insertSorted
+ *      insert an element in a Sorted linkedlist
  ******************************************************************************/
 void LinkedList::insertSorted(ListNode **head, ListNode *temp)
 {
@@ -279,10 +286,9 @@ void LinkedList::insertSorted(ListNode **head, ListNode *temp)
     }
 }
 
-
-
 /* ******************************************************************************
- * deleteDuplicates -  delete duplicates
+ * deleteDuplicates
+ *      delete duplicate elements from a linkedlist, do not keep any occurence
  ******************************************************************************/
 ListNode* LinkedList::deleteDuplicates(ListNode* head)
 {
@@ -332,9 +338,10 @@ ListNode* LinkedList::deleteDuplicates(ListNode* head)
     return newHead;
 }
 
-/* ******************************************************************************
- * deleteDuplicatesSorted -  delete duplicates
- ******************************************************************************/
+/* **************************************************************************************
+ * deleteDuplicatesSorted
+ *      delete duplicate elements from a linkedlist, keep one occurence
+ ***************************************************************************************/
 ListNode* LinkedList::deleteDuplicatesSorted(ListNode* head)
 {
     ListNode* cur = head;
@@ -382,14 +389,14 @@ void LinkedList::rotateCounterClock(ListNode **head_ref, int k)
     ListNode* last = *head_ref;
     int count = 1;
 
-    if ( *head_ref == NULL)
+    if (*head_ref == NULL)
     {
         return;
     }
 
     while (last->next != NULL)
     {
-        if(count == k)
+        if (count == k)
         {
             kth = last;
         }
@@ -411,7 +418,7 @@ void LinkedList::rotateCounterClock(ListNode **head_ref, int k)
 }
 /* ******************************************************************************
  * segEvenOdd
- *      Segregates even and odd elements in a linkedlist
+ *      Segregate even and odd elements from a linkedlist
  * ex.
  *      input  : 1->2->4->3->6->5->7
  *      output : 2->4->6->3->1->5->7
@@ -426,7 +433,7 @@ void LinkedList::segEvenOdd(ListNode* head)
     {
         if (!(cur->val%2) && cur != even)   // if even and not same
         {
-            while(cur != even)
+            while (cur != even)
             {
                 int temp = cur->val;
                 cur->val = even->val;
@@ -434,7 +441,7 @@ void LinkedList::segEvenOdd(ListNode* head)
                 even = even->next;
             }
         }
-        else if(!(cur->val%2) && cur == even) // even and same
+        else if (!(cur->val%2) && cur == even) // even and same
         {
             even = even->next;
         }
@@ -442,6 +449,10 @@ void LinkedList::segEvenOdd(ListNode* head)
     }
 }
 
+/* **************************************************************************************
+ * addTwoNumbers2
+ *      Add two numbers
+ ***************************************************************************************/
 ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
 {
     stack <ListNode*> s1,s2;
@@ -449,9 +460,9 @@ ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
     ListNode* res;
     int sum=0;
     int carry=0;
-    while(l1!=NULL || l2!=NULL)
+    while (l1!=NULL || l2!=NULL)
     {
-        if(l1)
+        if (l1)
         {
             s1.push(l1);
             l1=l1->next;
@@ -463,20 +474,18 @@ ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
             l2=l2->next;
         }
     }
-    while(!s1.empty() || !s2.empty())
+    while (!s1.empty() || !s2.empty())
     {
-        if(s1.size()>0 && s2.size() >0)
+        if (s1.size()>0 && s2.size() >0)
         {
             sum = s1.top()->val + s2.top()->val + carry;
-            cout<<" stack "<<s1.top()->val<<" "<<s2.top()->val<<endl;
             s1.pop();
             s2.pop();
             carry = sum / 10;
-            cout<<" here "<<sum<<endl;
             if (sum>9)
                 sum = sum%10;
             ListNode *temp = new ListNode(sum);
-            if(res == NULL)
+            if (res == NULL)
             {
                 res =temp;
                 ret = res;
@@ -486,27 +495,23 @@ ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
                 res->next = temp;
                 res = res->next;
             }
-            //if(s1.size()==1) break;
         }
-        if(s1.size()>0 && s2.size() ==0)
+        if (s1.size()>0 && s2.size() ==0)
         {
             sum = s1.top()->val + carry;
-            cout<<" stack "<<s1.top()->val<<endl;
             s1.pop();
             carry = sum / 10;
-            cout<<" here2 "<<sum<<endl;
             if (sum>9)
                 sum = sum%10;
             ListNode *temp = new ListNode(sum);
             res->next = temp;
             res = res->next;
         }
-        if(!s2.empty())
+        if (!s2.empty())
         {
             sum = s2.top()->val + carry;
             s2.pop();
             carry = sum / 10;
-            cout<<" here3 "<<sum<<endl;
             if (sum>9) sum =
                            sum%10;
             ListNode *temp = new ListNode(sum);
@@ -516,6 +521,11 @@ ListNode* LinkedList::addTwoNumbers2(ListNode* l1, ListNode* l2)
     }
     return ret;
 }
+
+/* **************************************************************************************
+ * deleteFromListGreater
+ *      delete duplicate elements from a linkedlist, keep one occurence
+ ***************************************************************************************/
 ListNode* LinkedList::deleteFromListGreater(ListNode **head, int dataToDelete)
 {
     ListNode *cur = *head;

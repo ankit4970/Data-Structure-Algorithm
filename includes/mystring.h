@@ -11,30 +11,40 @@
 #ifndef INTERVIEW_STRING_H
 #define INTERVIEW_STRING_H
 
-#include "common.h"
+#include <iostream>
+#include <string>
 #include <chrono>
 #include <map>
 #include <unordered_map>
-#include <string>
 #include <vector>
+#include <cstring>
+#include <climits>
+#include <algorithm>
 
-class StringClass
+using namespace std;
+
+class stringClass
 {
     vector<int> subSequenceTag(vector<string>& targetList, vector<string>& availableTagList);
     vector<int> subSequenceTagNew(vector<std::string>& targetList, vector<std::string>& availableTagList);
-    int longestPalindromeSubsequence(string str);
-    string longestPalindromeSubstring(std::string s);
+
+    uint32_t longestPalindromeSubsequence(string sequence);
+    string longestPalindromeSubstring(string sequence);
+
     int lps(char *str);
     char* compress(char* chars);
-    int compress(vector<char>& chars);
+    int compressString(vector<char>& chars);
     bool searchPattern1(char* target, char* pattern);
     bool searchPattern(char* target, char* pattern);
     void removeSpaces(char *str);
-    void maxOccuringcharacter(char *str);
+    void removeDuplicates(char* str);
+    char maxOccuringcharacter(char *str);
     void isPalindrome(char str[]);
     void stringReverseWords(char *string);
-    void reverse(char *begin, char *end);
+    void reverseString(char *begin, char *end);
     bool isSubsequence(char* s, char* t);
+    void wordBreak();
+    string mostRecentAnagram(string token);
 public:
     void stringMain();
 };

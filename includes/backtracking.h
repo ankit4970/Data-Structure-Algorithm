@@ -5,8 +5,11 @@
 #ifndef INTERVIEW_BACKTRACKING_H
 #define INTERVIEW_BACKTRACKING_H
 
-#include "common.h"
+#include <iostream>
 #include <vector>
+#include <algorithm>
+
+using namespace std;
 
 class BackTrackingClass{
 

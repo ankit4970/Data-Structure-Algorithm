@@ -5,9 +5,6 @@
 *   @date               10/4/17.
 ****************************************************************************************/
 
-#include <algorithm>
-#include <queue>
-#include "common.h"
 #include "matrix.h"
 
 void MatrixClass::printMatrix(vector<vector<int>>& matrix)
@@ -96,7 +93,7 @@ void MatrixClass::multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat
     {
         for (j = 0; j < n2; j++)
         {
-            printf("%d ", *(*(res + i) + j));
+            printf("%d ", *(*(res+i)+j));
         }
         printf("\n");
     }
@@ -106,11 +103,12 @@ void MatrixClass::multiply(int m1, int m2, int **mat1, int n1, int n2, int **mat
 int kthSmallest(vector<vector<int>>& matrix, int k) {
 
     priority_queue<int> pq;
-
     int i, j, cnt = 0;
 
-    for (i = 0; i < matrix.size(); i++) {
-        for (j = 0; j < matrix[0].size(); j++) {
+    for (i = 0; i < matrix.size(); ++i)
+    {
+        for (j = 0; j < matrix[0].size(); ++j)
+        {
             if (cnt < k)
             {
                 pq.push(matrix[i][j]);
@@ -133,6 +131,7 @@ int kthSmallestNew(vector<vector<int>>& matrix, int k)
     int n = matrix.size();
     int le = matrix[0][0], ri = matrix[n - 1][n - 1];
     int mid = 0;
+
     while (le < ri)
     {
         mid = le + (ri-le)/2;

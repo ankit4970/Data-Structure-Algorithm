@@ -5,12 +5,18 @@
  *      Author: ankit
  ***************************************************************************************/
 
-#include "common.h"
-#include "tree.h"
+#include <iostream>
 #include <queue>
 #include <cstring>
 #include <climits>
+#include "tree.h"
 
+using namespace std;
+
+/* **************************************************************************************
+ * preOrder
+ *      Pre-Order traversal of Binary Tree
+ ***************************************************************************************/
 void TreeClass::preOrder(TreeNode *root)
 {
     if (root)
@@ -21,6 +27,10 @@ void TreeClass::preOrder(TreeNode *root)
     }
 }
 
+/* **************************************************************************************
+ * inOrder
+ *      In-Order traversal of Binary Tree
+ ***************************************************************************************/
 void TreeClass::inOrder(TreeNode *root)
 {
     if (root)
@@ -31,6 +41,10 @@ void TreeClass::inOrder(TreeNode *root)
     }
 }
 
+/* **************************************************************************************
+ * postOrder
+ *      Post-Order traversal of Binary Tree
+ ***************************************************************************************/
 void TreeClass::postOrder(TreeNode *root)
 {
     if (root)
@@ -41,11 +55,14 @@ void TreeClass::postOrder(TreeNode *root)
     }
 }
 
+/* **************************************************************************************
+ * levelOrder
+ *      Level-Order traversal of Binary Tree
+ ***************************************************************************************/
 void TreeClass::levelOrder(TreeNode *root)
 {
     TreeNode* temp = nullptr;
-
-    std::queue<TreeNode*> tempQueue;
+    queue<TreeNode*> tempQueue;
     tempQueue.push(root);
 
     while (!tempQueue.empty())
@@ -66,7 +83,8 @@ void TreeClass::levelOrder(TreeNode *root)
 }
 
 /* **************************************************************************************
-* Returns true if the given tree is a BST and its values are >= min and <= max.
+* isBSTUtil
+*       Utility function for isBST
 ***************************************************************************************/
 bool TreeClass::isBSTUtil(TreeNode *node, int min, int max)
 {
@@ -87,21 +105,20 @@ bool TreeClass::isBSTUtil(TreeNode *node, int min, int max)
         isBSTUtil(node->right, node->val + 1, max);      // Allow only distinct values
 }
 
-/* Returns true if the given tree is a binary search tree (efficient version). */
+/* **************************************************************************************
+ * isBST
+ *       Returns true if the given Binary Tree is Binary Search Tree
+ ***************************************************************************************/
 int TreeClass::isBST(TreeNode *node)
 {
     return isBSTUtil(node, INT_MIN, INT_MAX);
 }
 
-int TreeClass::helperBT(string &data)
-{
-    int pos = data.find(',');
-    int val = stoi(data.substr(0, pos));
-    data = data.substr(pos + 1);
-    return val;
-}
-
-// Encodes a tree to a single string.
+/* **************************************************************************************
+ * serializeBT
+ *      Serializes a given Binary Tree into string
+ *      Idea is to pack a given Binary Tree in some memory efficient structure
+ ***************************************************************************************/
 string TreeClass::serializeBT(TreeNode *root)
 {
     if (root == nullptr)
@@ -110,6 +127,22 @@ string TreeClass::serializeBT(TreeNode *root)
     return to_string(root->val) + "," + serializeBT(root->left) + "," + serializeBT(root->right);
 }
 
+/* **************************************************************************************
+ * helperBT
+ *      Helper function
+ ***************************************************************************************/
+int TreeClass::helperBT(string &data)
+{
+    int pos = data.find(',');
+    int val = stoi(data.substr(0, pos));
+    data = data.substr(pos + 1);
+    return val;
+}
+
+/* **************************************************************************************
+ * deSerializeBTHelper
+ *      Helper function for deSerializeBT
+****************************************************************************************/
 TreeNode* TreeClass::deserializeBTHelper(string& data)
 {
     if (data[0] == '#')
@@ -127,11 +160,19 @@ TreeNode* TreeClass::deserializeBTHelper(string& data)
     }
 }
 
+/* **************************************************************************************
+ * deSerializeBT
+ *      DeSerializes the given Binary Tree
+ ******************************************************************************/
 TreeNode* TreeClass::deserializeBT(string data)
 {
     return deserializeBTHelper(data);
 }
 
+/* **************************************************************************************
+ * serializeBSTHelper
+ *      Helper function for serializeBST
+ ******************************************************************************/
 void TreeClass::serializeBSTHelper(TreeNode* root, string& str)
 {
     if (root)
@@ -146,6 +187,11 @@ void TreeClass::serializeBSTHelper(TreeNode* root, string& str)
     }
 }
 
+/* **************************************************************************************
+ * serializeBST
+ *      Serializes a given Binary Search Tree into string
+ *      Idea is to pack a given Binary Search Tree in some memory efficient structure
+ ***************************************************************************************/
 string TreeClass::serializeBST(TreeNode *root)
 {
     string str;
@@ -153,6 +199,10 @@ string TreeClass::serializeBST(TreeNode *root)
     return str;
 }
 
+/* **************************************************************************************
+ * deSerializeBSTHelper
+ *      Helper function for deSerializeBST
+****************************************************************************************/
 TreeNode* TreeClass::deSerializeBSTHelper(string& str, int& pos, int minValue, int maxValue)
 {
     if(pos >= str.size())
@@ -162,7 +212,7 @@ TreeNode* TreeClass::deSerializeBSTHelper(string& str, int& pos, int minValue, i
 
     int value;
     memcpy(&value, &str[pos], sizeof(int));
-    if(value < minValue || value > maxValue)
+    if (value < minValue || value > maxValue)
     {
         return NULL;
     }
@@ -175,29 +225,47 @@ TreeNode* TreeClass::deSerializeBSTHelper(string& str, int& pos, int minValue, i
     return node;
 }
 
+/* **************************************************************************************
+ * deSerializeBST
+ *      DeSerializes the given Binary Search Tree
+ ******************************************************************************/
 TreeNode* TreeClass::deSerializeBST(string data)
 {
     int pos = 0;
     return deSerializeBSTHelper(data, pos, INT_MIN, INT_MAX);
 }
 
-TreeNode* minElement(TreeNode* node)
+/* **************************************************************************************
+ * minElementBST
+ *      Returns Minimum value node from a given Binary Search Tree
+ ***************************************************************************************/
+TreeNode* TreeClass::minElementBST(TreeNode* node)
 {
-    while (node->left)
+    if(node && node->left)
     {
-        node = node->left;
+        while (node->left)
+        {
+            node = node->left;
+        }
+        return node;
     }
-
-    return node;
+    else
+    {
+        return node ? node : NULL;
+    }
 }
 
-TreeNode* inOrderSuccessorBST(TreeNode* root, TreeNode* node)
+/* **************************************************************************************
+ * inOrderSuccessorBST
+ *      Return In-Order Successor of a given node in Binary Search Tree
+ ***************************************************************************************/
+TreeNode* TreeClass::inOrderSuccessorBST(TreeNode* root, TreeNode* node)
 {
     TreeNode* successor = nullptr;
 
     if (node->right != NULL)
     {
-        return minElement(node->right); // Leftmost node in right subtree
+        return minElementBST(node->right); // Leftmost node in right subtree
     }
 
     while (root)
@@ -212,12 +280,54 @@ TreeNode* inOrderSuccessorBST(TreeNode* root, TreeNode* node)
             root = root->right;
         }
         else
+        {
             break;
+        }
     }
 
     return successor;
 }
 
+/* **************************************************************************************
+ * kthSmallestNodeBSTUtil
+ *      Utility function for kthSmallestNodeBST
+ ***************************************************************************************/
+TreeNode* TreeClass::kthSmallestNodeBSTUtil(TreeNode* root, int& k)
+{
+    if (root != NULL)
+    {
+        TreeNode* node = kthSmallestNodeBSTUtil(root->left, k);
+        if (k == 0)
+        {
+            return node;
+        }
+        k--;
+        if (k == 0)
+        {
+            return root;
+        }
+        else
+        {
+            return kthSmallestNodeBSTUtil(root->right, k);
+        }
+    }
+    return NULL;
+}
+
+/* **************************************************************************************
+ * kthSmallestNodeBST
+ *      Returns kth smallest element for given Binary Search Tree
+ ***************************************************************************************/
+TreeNode* TreeClass::kthSmallestNodeBST(TreeNode* root, int k)
+{
+    int count = k;
+    return kthSmallestNodeBSTUtil(root, count);
+}
+
+/* **************************************************************************************
+ * treeMain
+ *      Driver function for Binary Tree
+ ***************************************************************************************/
 void TreeClass::treeMain()
 {
     TreeNode *root = new TreeNode(1);
@@ -254,5 +364,12 @@ void TreeClass::treeMain()
     inOrder(newRootBST); cout << endl;
 
     TreeNode* successor = inOrderSuccessorBST(rootBST, rootBST->right->right->left);
-    cout << "In order successor of " <<  rootBST->right->right->left->val << "is " << successor->val;
+    cout << "In order successor of " <<  rootBST->right->right->left->val << " is " << successor->val << endl;
+
+    inOrder(rootBST);
+    TreeNode* kth = kthSmallestNodeBST(rootBST, 1);
+    if (kth)
+    {
+        cout << "kth node is " << kth->val << endl;
+    }
 }

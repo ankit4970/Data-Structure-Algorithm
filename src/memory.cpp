@@ -5,7 +5,7 @@
 #include "../includes/common.h"
 
 #define my_sizeof(type)     (char*)(&type+1)-(char*)(&type)     // Similar to sizeof
-#define offset_of(TYPE, x)  ((size_t)&(((TYPE *)0)->x))         // Offset of variable in structure
+#define offset_of(TYPE, x)  ((size_t)&(((TYPE*)0)->x))         // Offset of variable in structure
 
 typedef struct {
     long long a;
@@ -79,7 +79,6 @@ void my_memcpy_fast(void* source, void* dest, size_t size)
     {
         *u64dest++ = *u64src++;
         size -= sizeof(uint64_t);
-        //cout << (char*)dest << endl;
     }
 
     char* p2 = (char*)(u64dest);

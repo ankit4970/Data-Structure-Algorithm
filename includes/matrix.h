@@ -7,6 +7,12 @@
 #ifndef INTERVIEW_MATRIX_H
 #define INTERVIEW_MATRIX_H
 
+#include <iostream>
+#include <algorithm>
+#include <queue>
+
+using namespace std;
+
 class MatrixClass
 {
     void printMatrix(vector<vector<int>> &matrix);

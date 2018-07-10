@@ -3,25 +3,7 @@
 //
 
 #include "mystack.h"
-#include <stack>
-#define MAX 1000
 
-class myStack
-{
-    public:
-
-        bool push(int data);
-        int pop();
-        bool isEmpty();
-        myStack()
-        {
-            top = -1;
-        }
-    private:
-        int array[MAX];
-        int size;
-        int top ;
-};
 
 bool myStack::isEmpty()
 {
@@ -46,8 +28,6 @@ bool myStack::push(int data) {
     array[++top] = data;
     return true;
 }
-
-
 
 class MinStack
 {

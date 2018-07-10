@@ -5,7 +5,12 @@
 #ifndef INTERVIEW_LINKEDLIST_H
 #define INTERVIEW_LINKEDLIST_H
 
-#include "common.h"
+#include <iostream>
+#include <stack>
+#include <climits>
+#include <cstddef>
+
+using namespace std;
 
 // A LinkedList Node
 struct ListNode

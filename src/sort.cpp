@@ -6,7 +6,6 @@
 *   @author             ankit
 ****************************************************************************************/
 
-#include "common.h"
 #include "sort.h"
 #include "utility.h"
 
@@ -35,7 +34,7 @@ void SortingClass::heapify(int arr[], int n, int i)
         heapify(arr, n, largest);
     }
 
-    printList(arr, n);
+    //printList(arr, n);
 }
 
 /**************************************************************************************************
@@ -184,7 +183,7 @@ int SortingClass::partition(int array[], int low, int high)
 
     swap(array, lowIndex, high);	// Putting pivot to proper location
 
-    printList(array, high-low);
+    //printList(array, high-low);
     return lowIndex;
 }
 
@@ -287,7 +286,7 @@ bool SortingClass::bubbleSort(int array[], int len)
         }
 
         cout << "Bubble sort : Array after " <<i <<" pass" << "->";
-        printList(array, len);
+        //printList(array, len);
     }
 
     return true;
@@ -328,7 +327,7 @@ bool SortingClass::insertionSort(int array[], int len)
         }
         array[index] = key;
         cout << "Insertion sort : Array after " << i <<" pass" << " -> ";
-        printList(array, len);
+        //printList(array, len);
     }
 
     return true;
@@ -376,7 +375,7 @@ void SortingClass::selectionSort(int arr[],int len)
         }
 
         cout << "Selection sort : Array after " << i <<" pass" << " -> ";
-        printList(arr, len);
+        //printList(arr, len);
     }
 }
 
@@ -391,7 +390,7 @@ int SortingClass::sortingMain()
     int length = sizeof(arr) / sizeof(arr[0]);
 
     cout << "Array before sorting is " << "-->";
-    printList(arr, length);
+    //printList(arr, length);
     cout << endl;
 
     //selectionSort(arr,ARRAY_LENGTH);

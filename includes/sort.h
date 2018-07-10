@@ -7,6 +7,7 @@
 
 #include <iostream>
 
+using namespace std;
 class SortingClass {
     void selectionSort(int arr[],int len);
     bool insertionSort(int array[], int len);
